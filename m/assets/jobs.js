@@ -25,7 +25,11 @@ $(function() {
     initData: function() {
       var that = this;
       $lists = $('#lists');
+      var queryStr = window.location.search;
       that.lastUrl = this.domain + '/api/job/filter';
+      if(queryStr){
+        this.lastUrl += queryStr;
+      }
       $.get(that.lastUrl,  function(data) {
         if (data.code == 0) {
           var html = that.getHtml(data.data.list);
@@ -174,7 +178,24 @@ $(function() {
         data.data.list.forEach(function(item, i) {
           var $li = $('<li data-title="' + item.id + '">' + item.name + '</li>');
           $cate.append($li);
-        })
+        });
+        var query  = window.location.search;
+        if(query){
+          var filterName = query.split('=')[0].substr(1);
+          var value = query.split('=')[1];
+          var $currMenu = $('.drop-ul[data-filter='+filterName+']');
+          $currMenu.find('li').each(function(i, item) {
+            if($(item).data('title') == value){
+              var type = $currMenu.attr('id').split('-')[1];
+              var $menu = $('.menu[data-type='+type+']');
+              $menu.html($(item).html()+' <i class="iconfont">&#xe606;</i>');
+              $menu.css('color','#f96a39');
+              $(item).addClass('active');
+            }else{
+              $(item).removeClass('active');
+            }
+          });
+        }
       });
     },
     getHtml: function(list) {
