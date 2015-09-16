@@ -21,6 +21,7 @@ $(function() {
       this.$dropUl = $('.drop-ul');
       this.$choose = this.$dropUl.find('li');
       this.$moreBtn = $('.load-more');
+      this.$loading = $('.loading');
     },
     initData: function() {
       var that = this;
@@ -30,11 +31,13 @@ $(function() {
       if(queryStr){
         this.lastUrl += queryStr;
       }
+      that.$loading.show();
       $.get(that.lastUrl,  function(data) {
         if (data.code == 0) {
           var html = that.getHtml(data.data.list);
           that.resultCount = data.data.resultCount;
           $lists.append(html);
+          that.$loading.hide();
           if(that.hasMore()){
             var currCount = $('#lists dl').length;
             that.$moreBtn.addClass('active');
@@ -49,13 +52,14 @@ $(function() {
     bind: function() {
       $(document).on(event, this.toggle);
       $("#drops").on(event, $('.drop-ul li'), this.choose.bind(this));
-      $("button").on(event, this.loadMore.bind(this));
+      $(".load-more").on(event, this.loadMore.bind(this));
     },
     toggle: function(event) {
       var e = event || window.event;
       var elem = e.target || e.srcElement;
-      if (elem.className == 'menu') {
-        var $toggleEle = $('#drop-' + $(elem).data('type'));
+      if ($('.nav-bar').find(elem).length > 0) {
+        console.log($(elem) .data('type'));
+        var $toggleEle = $('#drop-' + ($(elem).data('type')||$(elem).parent().data('type')));
         if ($toggleEle.hasClass('active')) {
           $(".drop-ul").removeClass('active');
         } else {
@@ -89,6 +93,7 @@ $(function() {
             $(currMenu).html($(currMenu).data('default')+' <i class="iconfont">&#xe606;</i>');
             $(currMenu).css('color', '#898989');
             that.lastUrl = that.domain+'/api/job/filter';
+            that.$loading.show();
             $.get(that.lastUrl , function(data){
               if(data.code == 0){
                 that.resultCount = data.data.resultCount;
@@ -100,6 +105,7 @@ $(function() {
                 }else{
                   that.$moreBtn.removeClass('active');
                 }
+                that.$loading.hide();
               }else{
                 alert(that.errMsg);
               }
@@ -109,6 +115,7 @@ $(function() {
             $(currMenu).css('color', '#f96a39');
             var value = $(elem).data('title') || $(elem).text();
             that.lastUrl = that.domain + "/api/job/filter?" + $elem.parent().data('filter') + "=" + value;
+              that.$loading.show();
             $.get(that.lastUrl , function(data) {
                 if (data.code == 0) {
                   that.resultCount = data.data.resultCount;
@@ -120,6 +127,7 @@ $(function() {
                   }else{
                     that.$moreBtn.removeClass('active');
                   }
+                  that.$loading.hide();
                 }else{
                   alert(that.errMsg)
                 }
@@ -200,7 +208,7 @@ $(function() {
     },
     getHtml: function(list) {
       var source = '{{each list as job i}}' + '  <dl>' +
-        '    <dt>{{job.category.name}}</dt>' +
+        '    <dt style="color:{{job.category.themeColor}}; border-color:{{job.category.themeColor}}">{{job.category.name | omit:3}}</dt>' +
         '    <dd class="content">' +
         '      <a href="/m/jobs/detail.html?id={{job.id}}">' +
         '        <h2>{{job.title | omit:11}}</h2>' +
