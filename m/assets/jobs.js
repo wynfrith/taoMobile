@@ -1,6 +1,6 @@
 $(function() {
   var ua = navigator.userAgent;
-  var event = (ua.match(/iphone/i)) || (ua.match(/iPad/i)) ? 'touchend' : 'click';
+  var event = (ua.match(/iphone/i)) || (ua.match(/iPad/i)) ? 'click' : 'click';
 
   var jobs = {
     domain: 'http://120.24.218.56',
