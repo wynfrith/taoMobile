@@ -1,0 +1,377 @@
+/*
+手机端的蓝色底框去除
+-webkit-tap-highlight-color:rgba(0,0,0,0);
+*/
+@font-face {
+  font-family: 'iconfont';
+  src: url('//at.alicdn.com/t/font_1442302897_9687462.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1442302897_9687462.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_1442302897_9687462.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/font_1442302897_9687462.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_1442302897_9687462.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  font-size: .16rem;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+a {
+  color:deepskyblue;
+  text-decoration: none;
+}
+html {
+  font-family: "Helvetica Neue",Helvetica,"Hiragino Sans GB","STHeitiSC-Light","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+
+.iconfont {
+  font-family:"iconfont";
+  font-style:normal;
+  font-size:.12rem;
+}
+
+header {
+  text-align: center;
+}
+
+header h1 {
+  font-size: 0.18rem;
+  font-weight: normal;
+  color: #f96a39;
+  margin:0.1rem 0;
+}
+
+.load-more {
+  display: none;
+}
+.load-more.active {
+  display: block;
+}
+
+
+nav {
+  background: #f9f9f9;
+  border-top:.01rem solid #cacaca;
+  border-bottom:.01rem solid #cacaca;
+}
+.nav-bar{
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  list-style: none;
+  padding-top:.12rem;
+  padding-bottom:.12rem;
+}
+
+.nav-bar li {
+  margin: auto;
+  width: 33%;
+  height: 33%;
+  text-align: center;
+  border-left:1px solid #cccccc;
+  font-size: 0.14rem;
+  color: #898989;
+  position: relative;
+}
+
+.nav-bar li:first-child {
+  border: 0;
+}
+
+.nav-bar a {
+  color:#898989;
+}
+.nav-bar a:focus{
+  color:#666;
+}
+
+
+.drop-ul {
+  position: absolute;
+  background:#fff;
+  display: block;
+  width: 100%;
+  height: 0;
+  z-index: 10;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+  /*display: none;*/
+  transition: height 2s ease;
+}
+
+.drop-ul li {
+  border-bottom: 1px solid #cccccc;
+  font-size: .14rem;
+  padding: .1rem;
+  color:#f66666;
+  display: block;
+}
+
+.drop-ul li.active {
+  color: #f96a39;
+}
+.drop-ul li:active{
+  background: rgba(200,200,200,0.2);
+}
+.drop-ul.active {
+  /*display: block;*/
+  height: auto;
+}
+/*
+.dropdown {
+}
+
+.dropdown:after {
+  border: 0.045rem solid transparent;
+  border-top: 0.05rem solid #898989;
+  width: 0;
+  height: 0;
+  top:0.06rem;
+  right: 0.07rem;
+  position: absolute;
+  content: ' '
+}
+*/
+
+
+
+dl {
+  position: relative;
+  height: 0.73rem;
+  border-bottom: 1px solid #d7d7d7;
+}
+
+
+dt {
+  border:.01rem solid #edbc5a;
+  color:#edbc5a;
+  border-radius: 1rem;
+  width:.4rem;
+  height:.4rem;
+  line-height: .4rem;
+  text-align: center;
+  font-size: .12rem;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0.11rem;
+  margin: auto 0;
+}
+
+dd.content {
+  display:block;
+  position: relative;
+  height: 100%;
+}
+
+dd.content a {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  color: #c1c1c1;
+  display: block;
+  padding: .18rem .1rem 0 .6rem;
+  outline: 0;
+}
+
+dd.content a:focus {
+  background-color: rgba(0,0,0,0.1);
+}
+
+dd.content h2 {
+  font-weight: normal;
+  color: #343434;
+}
+
+dd.content p {
+  display: flex;
+  margin-top: 0.03rem;
+}
+dd.content p span{
+  width: 33%;
+  text-align: center;
+}
+dd.content p span:first-child {
+  text-align: left;
+}
+dd.content p span:last-child {
+  text-align: right
+}
+
+dd.content .des span{
+  font-size: .12rem;
+}
+dd.content .price {
+  position: absolute;
+  top:0.18rem;;
+  right:0.1rem;
+  font-size: .12rem;
+  color: #343434;
+}
+dd.content .price b {
+  font-size: .18rem;
+  font-weight: normal;
+  color: #f96a39;
+}
+
+.job.detail .wrapper{
+  background-color: #f4f4f4;
+}
+.detail .first{
+  background-color: #fff;
+  padding-bottom: .1rem;
+  border-bottom: 1px solid #dbdbdb;
+}
+.detail header{
+  border-bottom: 1px solid #f96a39;
+  margin-bottom: .15rem;
+}
+
+.detail .first{
+  padding-bottom: 1
+}
+.detail .first span{
+  color: #c1c1c1;
+  font-size: .12rem
+}
+
+.job-type {
+  padding:.05rem 0 .1rem 0.25rem;;
+  border-bottom: 1px solid #c1c1c1;
+}
+.job-type b{
+  font-size: .12rem;
+  color: #f96a39;
+}
+.job-type span{
+  display: inline-block;
+}
+.job-type span:first-child {
+  margin-right: .3rem;
+}
+.job-money {
+  font-size: .12rem;
+  padding:.2rem 0 .1rem 0.1rem;
+}
+.job-money b{
+  font-size: .24rem;
+  color: #f96a39;
+  margin-right: .1rem;
+}
+.job-des{
+  padding:0 0 .1rem 0.1rem;
+  font-size: .14rem;
+}
+.job-des span.title{
+  font-size: .14rem;
+  color:#898989;
+}
+.detail .second, .detail .third, .detail .fouth, .detail .fifth{
+  background-color: #fff;
+  margin-top: .12rem;
+  border-top:1px solid #dbdbdb;
+  padding: 0 0.1rem .13rem .1rem;
+  border-bottom: 1px solid #dbdbdb;
+}
+.detail .third, .detail .fouth, .detail .fifth{
+    padding: .1rem 0.1rem .1rem .1rem;
+}
+
+.second h3{
+  border-left: 4px solid #f96a39;
+  padding-left: .1rem;
+  font-size: .14rem;
+  color: #898989;
+  font-weight: normal;
+  margin:.15rem 0 .07rem 0;
+}
+.second p{
+  font-size: .14rem;
+  padding:0 0.1rem;
+  }
+.third .job-des,.fouth .job-des{
+  padding:0;
+}
+.third .job-des:first-child{
+  padding-bottom: .04rem;
+}
+.fouth {
+  position: relative;
+  min-height: .38rem;
+}
+.fouth .tip{
+  position: absolute;
+  display: inline-block;
+  color:#f96a39;
+  font-size:.12rem;
+  margin: .07rem 0 0rem 0;
+}
+
+.fouth div{
+  position: absolute;
+  background-color: #4ccda4;
+  width: .8rem;
+  height: .6rem;
+  top:-0.01rem;
+  right:0;
+}
+
+.fouth a:active div{
+  background-color: #3dbc94;
+}
+
+.fouth div p{
+  text-align: center;
+  color:#fff;
+  font-size:.14rem;
+  margin-top: .06rem;
+}
+.fouth div p i{
+  font-size:.18rem;
+}
+.fifth{
+  position: relative;
+}
+.fifth-content{
+  border: 1px solid #898989;
+  border-radius: .1rem;
+  padding:.1rem .08rem;
+  text-align: center;
+}
+.fifth p,.fifth span{
+  color:#898989;
+  font-size: .12rem;
+}
+.fifth i{
+  color: #4ccda4;
+  font-style: normal;
+  font-size:.12rem;
+}
+
+.fifth .title{
+  position: absolute;
+  top:0;
+  right:0;
+  width: 100%;
+  text-align: center;
+  margin-top:.02rem;
+}
+
+.fifth .title p{
+  display: inline-block;
+  padding: 0 .2rem;
+  background-color: #fff;
+  color:#000;
+}
+.detail h2{
+  font-weight: 600px;
+  border-left: .04rem solid #f96a39;
+  padding-left: .1rem;
+  font-size: .16rem;
+  margin: 0 .1rem;
+}

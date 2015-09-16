@@ -1,0 +1,27 @@
+{
+  "name": "taolijie-m",
+  "version": "0.0.1",
+  "description": "桃李街手机端",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wynfrith/taoMobile.git"
+  },
+  "keywords": [
+    "桃李街"
+  ],
+  "author": "Wynfrith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wynfrith/taoMobile/issues"
+  },
+  "homepage": "https://github.com/wynfrith/taoMobile#readme",
+  "devDependencies": {
+    "browser-sync": "^2.9.3",
+    "gulp": "^3.9.0",
+    "gulp-livereload": "^3.8.0"
+  }
+}
