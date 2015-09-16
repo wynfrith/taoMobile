@@ -73,7 +73,6 @@ $(function() {
     choose: function(e) {
       var $lists = $('#lists');
       var e = e || event || window.event;
-      e.preventDefault();
       var elem = e.target || e.srcElement;
       var $elem = $(elem);
       var that = this;
