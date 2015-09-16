@@ -168,7 +168,7 @@ $(function() {
       var source = '{{each list as job i}}' + '  <dl>' +
         '    <dt>{{job.category.name}}</dt>' +
         '    <dd class="content">' +
-        '      <a href="/jobs/detail.html?id={{job.id}}">' +
+        '      <a href="/m/jobs/detail.html?id={{job.id}}">' +
         '        <h2>{{job.title | omit:11}}</h2>' +
         '        <p class="des">' +
         '          <span><i title="坐标" class="iconfont">&#xe600;</i> {{job.region}}</span>' +
