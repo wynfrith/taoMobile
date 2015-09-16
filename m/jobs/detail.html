@@ -5,8 +5,24 @@
   <meta charset="UTF-8">
   <title>兼职详情</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  <script>
+  (function (doc, win) {
+    var docEl = doc.documentElement,
+      resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+      recalc = function () {
+        var clientWidth = docEl.clientWidth;
+        if (!clientWidth) return;
+        docEl.style.fontSize = 100 * (clientWidth / 320) + 'px';
+      };
+
+    // Abort if browser does not support addEventListener
+    if (!doc.addEventListener) return;
+    win.addEventListener(resizeEvt, recalc, false);
+    doc.addEventListener('DOMContentLoaded', recalc, false);
+  })(document, window);
+
+  </script>
   <link rel="stylesheet" href="/m/assets/main.css">
-  <script src="/m/assets/mobile.js"></script>
   <script src="/m/vendors/zepto/zepto.min.js"></script>
   <script src="/m/vendors/art-template/template.min.js"></script>
   <script src="/m/vendors/art-template/template.helper.js"></script>
@@ -14,9 +30,12 @@
 </head>
 
 <body class="detail job">
+  <div class="loading">
+    <img src="/m/assets/loading.svg" alt="">
+  </div>
   <header>
     <h1>兼职详情</h1>
-    <i class="iconfont"><a href="/m/jobs/list.html">&#xe603;</a></i>
+    <i class="iconfont"><a href="javascript:(function(){window.history.back()})();">&#xe603;</a></i>
   </header>
   <div class="wrapper" id="wrapper">
 

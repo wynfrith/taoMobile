@@ -1,8 +1,10 @@
 $(function() {
   var domain = "http://120.24.218.56"
   var $wrapper = $('#wrapper');
+  var $loading = $('.loading');
   var id = window.location.search.split('=')[1];
-  console.log(id);
+  console.log($loading);
+  $loading.show();
   $.get(domain + '/api/job/' + id, function(d) {
     if (d.data == null) {
       window.location.href = '/jobs/list.html';
@@ -13,6 +15,7 @@ $(function() {
       });
       $wrapper.html(html)
     };
+    $loading.hide();
   })
 });
 

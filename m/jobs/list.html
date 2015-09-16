@@ -14,8 +14,25 @@ TODO:
   <meta charset="UTF-8">
   <title>学生兼职</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  <script>
+  (function (doc, win) {
+    var docEl = doc.documentElement,
+      resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+      recalc = function () {
+        var clientWidth = docEl.clientWidth;
+        if (!clientWidth) return;
+        docEl.style.fontSize = 100 * (clientWidth / 320) + 'px';
+      };
+
+    // Abort if browser does not support addEventListener
+    if (!doc.addEventListener) return;
+    win.addEventListener(resizeEvt, recalc, false);
+    doc.addEventListener('DOMContentLoaded', recalc, false);
+  })(document, window);
+
+  </script>
   <link rel="stylesheet" href="/m/assets/main.css">
-  <script src="/m/assets/mobile.js"></script>
+  <!-- <script src="/m/assets/mobile.js"></script> -->
   <script src="/m/vendors/zepto/zepto.min.js"></script>
   <script src="/m/vendors/zepto/fx.js"></script>
   <script src="/m/vendors/art-template/template.min.js"></script>
@@ -64,7 +81,7 @@ TODO:
   </div>
 
 <div id="lists">
-  <dl>
+  <!-- <dl>
     <dt>三个字</dt>
     <dd class="content">
       <a href="">
@@ -80,7 +97,7 @@ TODO:
       </a>
     </dd>
     <dd title="line"></dd>
-  </dl>
+  </dl> -->
 </div>
 
 <div class="load-more">

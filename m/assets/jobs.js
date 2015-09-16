@@ -73,6 +73,7 @@ $(function() {
     choose: function(e) {
       var $lists = $('#lists');
       var e = e || event || window.event;
+      e.preventDefault();
       var elem = e.target || e.srcElement;
       var $elem = $(elem);
       var that = this;
@@ -158,6 +159,7 @@ $(function() {
         var url = that.lastUrl+str+(that.currPage+1);
         console.log(url);
         $lists = $('#lists');
+        that.$loading.show();
         $.get(url, function(data){
           if(data.code == 0){
             var html = that.getHtml(data.data.list);
@@ -169,6 +171,7 @@ $(function() {
           }else{
             alert(that.errMsg);
           }
+          that.$loading.hide();
         });
       }
     },

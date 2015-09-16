@@ -223,6 +223,7 @@ dd.content a {
   color: #c1c1c1;
   display: block;
   padding: .18rem .1rem 0 .6rem;
+  pointer-events:none;
   outline: 0;
 }
 
