@@ -78,11 +78,11 @@ $(function() {
       $allMenu.each(function(i, currMenu) {
         if ($(currMenu)[0] != $menu[0]) {
           console.log('ok');
-          $(currMenu).text($(currMenu).data('default'));
+          $(currMenu).html($(currMenu).data('default')+' <i class="iconfont">&#xe606;</i>');
           $(currMenu).css('color', '#898989');
         } else {
           if ($elem.data('title') == '全部') {
-            $(currMenu).text($(currMenu).data('default'));
+            $(currMenu).html($(currMenu).data('default')+' <i class="iconfont">&#xe606;</i>');
             $(currMenu).css('color', '#898989');
             that.lastUrl = that.domain+'/api/job/filter';
             $.get(that.lastUrl , function(data){
@@ -101,7 +101,7 @@ $(function() {
               }
             })
           } else {
-            $(currMenu).text($elem.text());
+            $(currMenu).html($elem.text()+' <i class="iconfont">&#xe606;</i>');
             $(currMenu).css('color', '#f96a39');
             var value = $(elem).data('title') || $(elem).text();
             that.lastUrl = that.domain + "/api/job/filter?" + $elem.parent().data('filter') + "=" + value;
@@ -138,12 +138,25 @@ $(function() {
       //如果总长 > 当前的长度 才会加载
       var that = this;
       if(that.hasMore()){
-        that.currPage += 1;
+        //执行玩 that.currPage += 1;
         var str ='?pageNumber=';
         if(that.lastUrl.indexOf('?') > 0){
           str = '&pageNumber='
         }
-        $.get(that.lastUrl+str+that.currPage, function(data){
+        var url = that.lastUrl+str+(that.currPage+1);
+        console.log(url);
+        $lists = $('#lists');
+        $.get(url, function(data){
+          if(data.code == 0){
+            var html = that.getHtml(data.data.list);
+            $lists.append(html);
+            that.currPage +=1;
+            if(!that.hasMore()){
+              that.$moreBtn.removeClass('active');
+            }
+          }else{
+            alert(that.errMsg);
+          }
         });
       }
     },
