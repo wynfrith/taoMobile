@@ -27,7 +27,7 @@ var source = [
   '        <span><i class="iconfont">&#xe604;</i> {{job.postTime | dateFormat:"yyyy-MM-dd hh:mm:ss"}}</span>',
   '      </p>',
   '      <p class="job-money">',
-  '        <b>{{job.wage}}元/天</b> {{job.timeToPay}}',
+  '        <b>{{job.wage}}元/{{job.salaryUnit}}</b> {{job.timeToPay}}',
   '      </p>',
   '      <p class="job-des"><span class="title">截止时间: </span>{{job.expiredTime | dateFormat:"yyyy-MM-dd" }}</p>',
   '      <p class="job-des"><span class="title">工作时间: </span>{{job.workTime}}</p>',

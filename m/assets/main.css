@@ -24,8 +24,8 @@ a {
 }
 html {
   font-family: "Helvetica Neue",Helvetica,"Hiragino Sans GB","STHeitiSC-Light","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  background-color: #f9f9f9;
 }
-
 .iconfont {
   font-family:"iconfont";
   font-style:normal;
@@ -56,13 +56,15 @@ html {
 
 header {
   text-align: center;
+  background-color: #fff;
+  padding:0.1rem 0;
 }
 
 header h1 {
   font-size: 0.18rem;
   font-weight: normal;
   color: #f96a39;
-  margin:0.1rem 0;
+  /*margin:0.1rem 0;*/
 }
 
 .load-more {
@@ -275,17 +277,18 @@ dd.content .price b {
 .detail .first{
   background-color: #fff;
   padding-bottom: .1rem;
+  padding-top: .15rem;
   border-bottom: 1px solid #dbdbdb;
 }
 .detail header{
   border-bottom: 1px solid #f96a39;
-  margin-bottom: .15rem;
+  /*margin-bottom: .15rem;*/
   position: relative;
 }
 .detail header i {
   position: absolute;
   left:.1rem;;
-  top:0;
+  top:0.1rem;
 }
 .detail header i a{
   color: #f96a39;
@@ -436,4 +439,91 @@ dd.content .price b {
   padding-left: .1rem;
   font-size: .16rem;
   margin: 0 .1rem;
+}
+
+
+
+/*
+下面是二手
+*/
+
+#sh  header h1{
+  color: #4ccda4;
+}
+
+#sh #lists {
+  height: 100%;
+
+}
+
+#sh .list{
+  display: block;
+  margin:.1rem;
+  height: 1.08rem;
+  overflow: hidden;;
+  position: relative;
+  background-color: #fff;
+}
+
+#sh .list:hover{
+  background-color: rgba(222, 222, 222,0.4);
+}
+
+#sh .list h2{
+  font-weight: normal;
+  font-size:.14rem;
+  /*padding: .05rem 0 0 .05rem;*/
+  word-break: keep-all;
+  color:#343434;
+}
+
+#sh .list .content{
+  margin-left: 1.45rem;
+  padding: .04rem;
+  height: inherit;
+}
+
+#sh .list img{
+  position: absolute;
+  width: 1.45rem;
+  height: 1.08rem;
+}
+#sh .list p {
+  padding-top: .15rem;
+}
+
+#sh .list p span{
+  color:#4ccda4;
+  font-size: .12rem;
+}
+#sh .content-middle span{
+    width: .4rem;
+}
+
+#sh .list .oldNew{
+  border:1px solid #4ccda4;
+  border-radius: 5px;
+  padding: .02rem;
+}
+#sh .list .price{
+  font-size: .1rem;
+  color: #f96a39;
+
+}
+#sh .list .price b{
+  font-size:.14rem;
+  font-weight: normal;
+}
+#sh .list .right {
+  display: inline-block;
+  float: right;
+  margin-top: .03rem;
+}
+
+/*二手detail*/
+#sh h2{
+  border: none;
+}
+#sh h3{
+  border-color: #4ccda4;
 }
