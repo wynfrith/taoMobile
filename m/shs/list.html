@@ -11,7 +11,7 @@
   <script src="/m/vendors/zepto/zepto.min.js"></script>
   <script src="/m/vendors/art-template/template.min.js"></script>
   <script src="/m/vendors/art-template/template.helper.js"></script>
-  <!-- <script src="/m/assets/jobs.js"></script> -->
+  <script src="/m/assets/shlist.js"></script>
 </head>
 
 <body id="sh">
@@ -24,38 +24,38 @@
   <nav>
     <ul class="nav-bar">
       <!-- flexbox -->
-      <li><a class="menu" href="javascript:" data-type="cate" data-default="选择分类">选择分类 <i class="iconfont">&#xe606;</i></a></li>
-      <li><a class="menu" href="javascript:" data-type="method" data-default="结算方式">新旧程度<i class="iconfont">&#xe606;</i></a></li>
-      <li><a class="menu" href="javascript:" data-type="region" data-default="区域选择">价格筛选<i class="iconfont">&#xe606;</i></a></li>
+      <li><a class="menu" href="javascript:" data-default="选择分类" data-type="cate">选择分类 <i class="iconfont">&#xe606;</i></a></li>
+      <li><a class="menu" href="javascript:" data-default="新旧程度" data-type="oldnew">新旧程度<i class="iconfont">&#xe606;</i></a></li>
+      <li><a class="menu" href="javascript:" data-default="价格筛选"  data-type="price">价格筛选<i class="iconfont">&#xe606;</i></a></li>
     </ul>
   </nav>
   <div id="drops">
-    <ul class="drop-ul" id="drop-cate" data-filter="jobPostCategoryId">
-      <li class="active" data-title="全部">全部</li>
+    <ul class="drop-ul" id="drop-cate" data-filter="secondHandPostCategoryId">
+      <li class="active" data-title="选择分类">全部</li>
     </ul>
-    <ul class="drop-ul" id="drop-method" data-filter="timeToPay">
-      <li class="active" data-title="全部">全部</li>
-      <li>日结</li>
-      <li>周结</li>
-      <li>月结</li>
-      <li>完工结算</li>
+    <ul class="drop-ul" id="drop-oldnew" data-filter="depreciationRate">
+      <li class="active" data-title="新旧程度">全部</li>
+      <li>全新</li>
+      <li>九成新</li>
+      <li>八成新</li>
+      <li>七成新</li>
+      <li>六成新</li>
     </ul>
-    <ul class="drop-ul" id="drop-region" data-filter="region">
-      <li class="active" data-title="全部">全部</li>
-      <li>张店区</li>
-      <li>淄川区</li>
-      <li>临淄区</li>
-      <li>博山区</li>
-      <li>周村区</li>
-      <li>桓台县</li>
-      <li>沂源县</li>
-      <li>高青县</li>
+    <ul class="drop-ul" id="drop-price" data-filter="price">
+      <li class="active" data-title="价格筛选">全部</li>
+      <li data-min="0" data-max="10">￥0-10</li>
+      <li data-min="10" data-max="50">￥10-50</li>
+      <li data-min="50" data-max="100">￥50-100</li>
+      <li data-min="100" data-max="500">￥100-500</li>
+      <li data-min="500" data-max="1000">￥500-1K</li>
+      <li data-min="1000" data-max="5000">￥1K-5K</li>
+      <li data-min="5000">￥5K以上</li>
     </ul>
 
   </div>
 
   <div id="lists">
-      <a class="list" href="/m/shs/detail.html">
+      <!-- <a class="list" href="/m/shs/detail.html">
         <img src="/m/assets/test.jpeg" alt="测试测试">
         <div class="content">
           <h2>低价出售二手吉他一个</h2>
@@ -69,7 +69,7 @@
             <span class="right"> <i class="iconfont">&#xe604;</i>12-26</span>
           </p>
         </div>
-      </a>
+      </a> -->
 
   </div>
   <div class="load-more">
