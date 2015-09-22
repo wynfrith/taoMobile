@@ -67,6 +67,7 @@ header h1 {
   /*margin:0.1rem 0;*/
 }
 
+/*滚动分页*/
 .load-more {
   text-align: center;
   margin-top:.1rem;
@@ -86,12 +87,25 @@ header h1 {
 .load-more.active {
   display: block;
 }
+/*标准分页*/
+.pagination{
+  /*display: none;*/
+  text-align: center;
+}
+.prev-page{
 
+}
+.next-page{
+
+}
+.page-number{
+
+}
 
 nav {
   background: #f9f9f9;
-  border-top:.01rem solid #cacaca;
-  border-bottom:.01rem solid #cacaca;
+  border-top:1px solid #cacaca;
+  border-bottom:1px solid #cacaca;
 }
 .nav-bar{
   list-style: none;
@@ -197,7 +211,7 @@ dl {
 
 
 dt {
-  border:.01rem solid #edbc5a;
+  border:1px solid #edbc5a;
   color:#edbc5a;
   border-radius: 1rem;
   width:.4rem;
@@ -475,6 +489,7 @@ dd.content .price b {
   /*padding: .05rem 0 0 .05rem;*/
   word-break: keep-all;
   color:#343434;
+  padding: 0;
 }
 
 #sh .list .content{
@@ -523,7 +538,96 @@ dd.content .price b {
 /*二手detail*/
 #sh h2{
   border: none;
+  font-weight: normal;
+  padding: 0;
+  padding:.1rem 0 .1rem 0;
 }
 #sh h3{
   border-color: #4ccda4;
+}
+
+#sh .sh-first .pic-box{
+  width:100%;
+  height:2.2rem;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+#sh .sh-first .pic-box img{
+  width: 100%;
+  height: 100%;
+}
+
+.pic-box .swiper-pagination-bullet-active{
+      background: rgba(76,205,164,0.7);
+}
+.sh-first .text p, .sh-first .text span, .sh-first b{
+  font-size: .13rem;
+  font-weight: normal;
+}
+.sh-first .text p{
+  color: #4ccda4;
+  font-size: 0rem;
+}
+.sh-first .text .first-line span{
+  display: inline-block;
+  width: 49%;
+  box-sizing: border-box;
+  padding:0 .1rem;
+  text-align: left;
+}
+
+.sh-first .text .first-line span:nth-child(2){
+  text-align: right;
+  color:#fff;
+}
+
+.sh-first .text .first-line span:nth-child(2) i{
+  background-color: #f96a39;
+  font-style: normal;
+  width:.7rem;
+  height: .7rem;
+  display: inline-block;
+  line-height: .7rem;
+  text-align: center;
+  border-radius: 1rem;
+}
+
+.sh-first .text .oldNew {
+  padding: .01rem;
+  border:1px solid #4ccda4;
+  border-radius: .04rem;
+}
+
+.sh-first .text .second-line{
+  padding:0.1rem;
+  margin-top: -.2rem;
+  color:#c1c1c1;
+}
+
+.sh-first .place {
+  color:#c1c1c1;
+  font-size: .13rem;
+  padding:0 .1rem;
+}
+.sh-first .back{
+  position: absolute;
+  color:#f96a39;
+  background-color:rgba(220, 222, 222, 0.9);;
+  border-radius: 2rem;
+  width:.35rem;
+  height: .35rem;
+  line-height: .35rem;
+  text-align: center;
+  left:.1rem;
+  top:.1rem;
+  z-index: 1000;
+}
+
+.sh-first .back i{
+  font-size:.2rem;
+}
+
+.sh-first .back:hover{
+  background-color:rgba(220, 222, 222, 1);
 }

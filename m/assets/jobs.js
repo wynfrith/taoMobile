@@ -1,13 +1,21 @@
+var queryObj = {};
+function go(id){
+  window.location.href = "/m/jobs/detail.html?id="+id+urlEncode(queryObj);
+}
 $(function() {
   var ua = navigator.userAgent;
   var event = (ua.match(/iphone/i)) || (ua.match(/iPad/i)) ? 'click' : 'click';
+
+
+  queryObj['pageNumber'] = 0;
+
 
   var jobs = {
     domain: 'http://120.24.218.56',
     errMsg: '网络错误',
     resultCount: 0,
-    pageSize:8,
-    currPage:0,
+    pageSize:12, //每页页数
+    currPage: queryObj.pageNumber || 0,  //当前页
     lastUrl:'',
     init: function() {
       //请求兼职列表并渲染dom, 然后绑定事件
@@ -27,23 +35,29 @@ $(function() {
       var that = this;
       $lists = $('#lists');
       var queryStr = window.location.search;
-      that.lastUrl = this.domain + '/api/job/filter';
-      if(queryStr){
-        this.lastUrl += queryStr;
-      }
+      that.lastUrl = this.domain + '/api/job/filter?';
+      urlToObj(queryStr, queryObj);
+      queryObj['pageSize'] = that.pageSize;
+      that.lastUrl += urlEncode(queryObj);
+      //初始化queryObj对象
+      urlToObj(queryStr, queryObj);
+      //初始化currPage
+      that.currPage = parseInt(queryObj.pageNumber) || 0;
       that.$loading.show();
       $.get(that.lastUrl,  function(data) {
         if (data.code == 0) {
           var html = that.getHtml(data.data.list);
           that.resultCount = data.data.resultCount;
-          $lists.append(html);
+          $lists.html(html);
           that.$loading.hide();
-          if(that.hasMore()){
-            var currCount = $('#lists dl').length;
-            that.$moreBtn.addClass('active');
-          }else{
-            that.$moreBtn.removeClass('active');
-          }
+          //分页逻辑显示
+          that.showPage();
+          // if(that.hasMore()){
+          //   var currCount = $('#lists dl').length;
+          //   that.$moreBtn.addClass('active');
+          // }else{
+          //   that.$moreBtn.removeClass('active');
+          // }
         } else {
           alert('获取数据失败');
         }
@@ -52,7 +66,9 @@ $(function() {
     bind: function() {
       $(document).on(event, this.toggle);
       $("#drops").on(event, $('.drop-ul li'), this.choose.bind(this));
-      $(".load-more").on(event, this.loadMore.bind(this));
+      // $(".load-more").on(event, this.loadMore.bind(this));
+      $('.prev-page').on(event, this.prevPage.bind(this));
+      $('.next-page').on(event, this.nextPage.bind(this));
     },
     toggle: function(event) {
       var e = event || window.event;
@@ -82,57 +98,46 @@ $(function() {
       var $lis = $('#drops li');
       var $defaultLi = $('#drops li[data-title=全部]')
 
+      //修改url参数
+
       //操作菜单
       $allMenu.each(function(i, currMenu) {
         if ($(currMenu)[0] != $menu[0]) {
-          console.log('ok');
           $(currMenu).html($(currMenu).data('default')+' <i class="iconfont">&#xe606;</i>');
           $(currMenu).css('color', '#898989');
         } else {
+          //筛选时首先清空queryObj
+          queryObj = {};
+          queryObj['pageSize'] = that.pageSize;
           if ($elem.data('title') == '全部') {
             $(currMenu).html($(currMenu).data('default')+' <i class="iconfont">&#xe606;</i>');
             $(currMenu).css('color', '#898989');
-            that.lastUrl = that.domain+'/api/job/filter';
-            that.$loading.show();
-            $.get(that.lastUrl , function(data){
-              if(data.code == 0){
-                that.resultCount = data.data.resultCount;
-                that.currPage = 0;
-                var html = that.getHtml(data.data.list);
-                $lists.html(html);
-                if(that.hasMore()){
-                  that.$moreBtn.addClass('active');
-                }else{
-                  that.$moreBtn.removeClass('active');
-                }
-                that.$loading.hide();
-              }else{
-                alert(that.errMsg);
-              }
-            })
+            that.lastUrl = that.domain+'/api/job/filter?'+urlEncode(queryObj);
           } else {
             $(currMenu).html($elem.text()+' <i class="iconfont">&#xe606;</i>');
             $(currMenu).css('color', '#f96a39');
             var value = $(elem).data('title') || $(elem).text();
-            that.lastUrl = that.domain + "/api/job/filter?" + $elem.parent().data('filter') + "=" + value;
-              that.$loading.show();
-            $.get(that.lastUrl , function(data) {
-                if (data.code == 0) {
-                  that.resultCount = data.data.resultCount;
-                  that.currPage = 0;
-                  var html = that.getHtml(data.data.list);
-                  $lists.html(html);
-                  if(that.hasMore()){
-                    that.$moreBtn.addClass('active');
-                  }else{
-                    that.$moreBtn.removeClass('active');
-                  }
-                  that.$loading.hide();
-                }else{
-                  alert(that.errMsg)
-                }
-            });
+            var queryString = $elem.parent().data('filter') + "=" + value;
+            urlToObj(queryString, queryObj);
+            that.lastUrl = that.domain + "/api/job/filter?" + urlEncode(queryObj);
+            //添加筛选内容到queryObj
           }
+
+          console.log(queryObj);
+          //发送请求
+          that.$loading.show();
+          $.get(that.lastUrl , function(data) {
+            if (data.code == 0) {
+              that.resultCount = data.data.resultCount;
+              that.currPage = 0;
+              var html = that.getHtml(data.data.list);
+              $lists.html(html);
+              that.showPage();
+              that.$loading.hide();
+            }else{
+              alert(that.errMsg)
+            }
+          });
         }
       });
 
@@ -174,7 +179,77 @@ $(function() {
         });
       }
     },
-    hasMore: function(){
+    prevPage: function(){
+      //绑定事件 , 更新queryObj
+      var that = this;
+      console.log('上一页');
+      var $lists = $('#lists');
+      queryObj.pageNumber = (queryObj.pageNumber>0)?queryObj.pageNumber-1:0;
+      var url = that.domain+'/api/job/filter?'+urlEncode(queryObj);
+      $(document.body).prop('scrollTop',0);
+      that.$loading.show();
+      $.get(url, function(data){
+        if(data.code == 0){
+          var html = that.getHtml(data.data.list);
+          // $lists.append(html);
+          $lists.html(html);
+          that.currPage -=1;
+          that.showPage();
+        }else{
+          alert(that.errMsg);
+        }
+        that.$loading.hide();
+      });
+    },
+    nextPage: function(){
+      var that = this;
+      //绑定事件 , 更新queryObj
+      console.log('下一页');
+      queryObj.pageNumber = parseInt(queryObj.pageNumber)+1;
+      var url = that.domain+'/api/job/filter?'+urlEncode(queryObj);
+      $(document.body).prop('scrollTop',0);
+      that.$loading.show();
+      $.get(url, function(data){
+        if(data.code == 0){
+          var html = that.getHtml(data.data.list);
+          // $lists.append(html);
+          $lists.html(html);
+          that.currPage +=1;
+          that.showPage();
+          // if(!that.hasMore()){
+          //   that.$moreBtn.removeClass('active');
+          // }
+        }else{
+          alert(that.errMsg);
+        }
+        that.$loading.hide();
+      });
+    },
+    showPage: function(){ //显示当前页的逻辑
+      var that = this;
+      var $prev = $('.prev-page');
+      var $next= $('.next-page');
+      var $number = $('.page-number');
+      console.log(that.currPage);
+      if(that.currPage ==0){ //判断有没有上一页j
+        $prev.hide();
+      }else{
+        $prev.show();
+      }
+      if(!that.hasPage()){ //判断有没有下一页
+        $next.hide();
+      }else{
+        $next.show();
+      }
+      //显示当前第几页
+      $number.text('第'+(that.currPage+1)+'页');
+    },
+    hasPage: function(){//标准分页判断
+      var currCount = $('#lists dl').length;
+      //总数 > (当前页数-1)*页面的条数 + 当前页的数目
+      return this.resultCount > this.currPage * this.pageSize + currCount;
+    },
+    hasMore: function(){//滚动分页判断
       var that = this;
       var currCount = $('#lists dl').length;
       console.log(that.resultCount);
@@ -191,8 +266,19 @@ $(function() {
         });
         var query  = window.location.search;
         if(query){
-          var filterName = query.split('=')[0].substr(1);
-          var value = query.split('=')[1];
+          var filterName;
+          var value;
+          var obj = urlToObj(query);
+          if(obj['jobPostCategoryId']){
+            filterName = 'jobPostCategoryId';
+            value = obj['jobPostCategoryId'];
+          }else if(obj['timeToPay']){
+            filterName = 'timeToPay';
+            value = obj['timeToPay'];
+          }else if(obj['region']){
+            filterName = obj['region'];
+            value = obj['region'];
+          }
           var $currMenu = $('.drop-ul[data-filter='+filterName+']');
           $currMenu.find('li').each(function(i, item) {
             if($(item).data('title') == value){
@@ -212,7 +298,7 @@ $(function() {
       var source = '{{each list as job i}}' + '  <dl>' +
         '    <dt style="color:{{job.category.themeColor}}; border-color:{{job.category.themeColor}}">{{job.category.name | omit:3}}</dt>' +
         '    <dd class="content">' +
-        '      <a href="/m/jobs/detail.html?id={{job.id}}">' +
+        '      <a href="javascript:" onclick="go({{job.id}})">' +
         '        <h2>{{job.title | omit:11}}</h2>' +
         '        <p class="des">' +
         '          <span><i title="坐标" class="iconfont">&#xe600;</i> {{job.region}}</span>' +
