@@ -1,7 +1,7 @@
 $(function() {
   var ua = navigator.userAgent;
   var event = (ua.match(/iphone/i)) || (ua.match(/iPad/i)) ? 'click' : 'click';
-
+  FastClick.attach(document.body);
   var jobs = {
     domain: 'http://120.24.218.56',
     errMsg: '网络错误',
