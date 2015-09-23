@@ -39,7 +39,6 @@ $(function() {
           $lists.append(html);
           that.$loading.hide();
           if(that.hasMore()){
-            var currCount = $('#lists dl').length;
             that.$moreBtn.addClass('active');
           }else{
             that.$moreBtn.removeClass('active');

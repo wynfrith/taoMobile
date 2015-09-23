@@ -18,7 +18,7 @@ $(function(){
         });
         $wrapper.html(html);
 
-        var swiper = new Swiper('.pic-box', {
+        new Swiper('.pic-box', {
               pagination: '.swiper-pagination',
               paginationClickable: true,
               spaceBetween: 30,
