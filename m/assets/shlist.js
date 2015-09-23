@@ -20,6 +20,7 @@ $(function() {
     },
     choose: function(e){
         var $lists = $('#lists');
+          var $lis = $('#drops li');
         var e = e || event || window.event;
         var elem = e.target || e.srcElement;
         var $elem = $(elem);
@@ -27,6 +28,7 @@ $(function() {
         var $allMenu = $('.nav-bar a');
         var dataType = $(elem).parent().attr('id').split('-')[1];
         var $menu = $($('.nav-bar a[data-type=' + dataType + ']')[0]);
+          var $defaultLi = $('#drops li[data-all=true]');
         $allMenu.each(function(i, currMenu) {
           if($(currMenu)[0] == $menu[0]){
             var title = $(elem).data('title') || $(elem).text();
@@ -35,12 +37,15 @@ $(function() {
             console.log(currMenu);
             if($elem.text() == '全部') {
               lastUrl = domain + '/api/sh/filter';
+                $(currMenu).css('color', '#898989');
             }else if($(currMenu).data('type') == 'price'){
+              $(currMenu).css('color', '#f96a39');
               var min = '&minPrice='+$(elem).data('min');
               var max= $(elem).data('max')? '&maxPrice='+$(elem).data('max'): '';
               lastUrl = domain + '/api/sh/filter?rangeQuery=1'+min+max;
             }
             else{
+                $(currMenu).css('color', '#f96a39');
               lastUrl = domain + '/api/sh/filter?'+ $elem.parent().data('filter') + "=" + value;
             }
 
@@ -64,6 +69,14 @@ $(function() {
                 alert(errMsg)
               }
           });
+
+          $lis.removeClass('active');
+          $defaultLi.each(function(i, currLi) {
+            if ($(currLi).parent()[0] != $('#drop-' + dataType)[0]) {
+              $(currLi).addClass('active');
+            }
+          });
+          $elem.addClass('active');
 
         }else{
           $(currMenu).html($(currMenu).data('default')+' <i class="iconfont">&#xe606;</i>');
@@ -156,7 +169,11 @@ $(function() {
 
   //预加载
   (function init() {
+    var queryStr = window.location.search;
     lastUrl = domain + '/api/sh/filter';
+    if(queryStr){
+      lastUrl += queryStr;
+    }
     $.get(lastUrl, function(d) {
       if (d.data == null) {
         alert(errMsg);
