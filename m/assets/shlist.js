@@ -149,12 +149,14 @@ $(function() {
         var query  = window.location.search;
         if(query){
           var filterName = query.split('=')[0].substr(1);
+          console.log(filterName);
           var value = query.split('=')[1];
           var $currMenu = $('.drop-ul[data-filter='+filterName+']');
           $currMenu.find('li').each(function(i, item) {
-            if($(item).data('title') == value){
+            if($(item).data('id') == value || $(item).data('title') == value){
               var type = $currMenu.attr('id').split('-')[1];
               var $menu = $('.menu[data-type='+type+']');
+              console.log($menu );
               $menu.html($(item).html()+' <i class="iconfont">&#xe606;</i>');
               $menu.css('color','#f96a39');
               $(item).addClass('active');
