@@ -217,7 +217,7 @@ var source = ['{{each shs as sh}}',
   '          </p>',
   '          <p class="content-bottom">',
   '            <span><i class="iconfont">&#xe600;</i>{{sh.tradePlace | omit:"6"}}</span>',
-  '            <span class="right"> <i class="iconfont">&#xe604;</i>12-26</span>',
+  '            <span class="right"> <i class="iconfont">&#xe604;</i>{{sh.postTime | dateFormat:"MM-dd"}}</span>',
   '          </p>',
   '        </div>',
   '      </a>', '{{/each}}'
