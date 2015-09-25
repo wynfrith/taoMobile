@@ -17,6 +17,7 @@ var getState= function(state){
   resultCount = state.data.resultCount || 0;
   currPage = state.data.currPage || 0;
   queryObj = state.data.queryObj || {pageSize:16};
+  console.log(queryObj);
   document.body.scrollTop = state.data.scroll || 0;
 }
 
@@ -62,11 +63,13 @@ $(function() {
       }
 
       that.lastUrl = this.domain + '/api/job/filter?';
+      var queryStr = window.location.search;
       if(queryStr){
-        var queryStr = window.location.search;
+        console.log(queryStr);
         urlToObj(queryStr,queryObj);
       }
       this.lastUrl += urlEncode(queryObj);
+      console.log(queryObj);
       that.$loading.show();
       $.get(that.lastUrl,  function(data) {
         if (data.code == 0) {
@@ -235,17 +238,20 @@ $(function() {
           for(var key in queryObj){
             var value = queryObj[key];
             var $parent = $(".drop-ul[data-filter="+key+"]");
-            var $menu = $(".menu[data-type="+$parent.attr('id').split('-')[1]+"]");
-            console.log($parent);
-            $parent.find('li').each(function(i, item) {
-            if($(item).data('title')== value || $(item).text() == value){
-                $(item).addClass('active');//变色
-                $menu.html($(item).text()+' <i class="iconfont">&#xe606;</i>');
-                $menu.css('color', '#f96a39');
-              }else{
-                $(item).removeClass('active');
-              }
-            });
+            if($parent.length >0){
+              var $menu = $(".menu[data-type="+$parent.attr('id').split('-')[1]+"]");
+              console.log($parent);
+              $parent.find('li').each(function(i, item) {
+              if($(item).data('title')== value || $(item).text() == value){
+                  $(item).addClass('active');//变色
+                  $menu.html($(item).text()+' <i class="iconfont">&#xe606;</i>');
+                  $menu.css('color', '#f96a39');
+                }else{
+                  $(item).removeClass('active');
+                }
+              });
+            }
+
           }
           return;
         }

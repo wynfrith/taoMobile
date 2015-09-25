@@ -6,9 +6,8 @@ var queryObj = {
   var resultCount = 0; //总数
 function go(id){
   //记录History
-  console.log("ok");
   var state = History.getState();
-  console.log(queryObj);
+  console.log(list);
   History.pushState({currId:id, list: list, scroll:document.body.scrollTop, resultCount: resultCount, currPage: currPage, queryObj:queryObj},'state',"?state="+id);
 }
   $(function() {
@@ -124,7 +123,6 @@ function go(id){
     loadMore: function() {
       //如果总长 > 当前的长度 才会加载
       var that = util;
-      console.log(that);
       that.$moreBtn = $('.load-more');
       if (that.hasMore()) {
         // //执行玩 that.currPage += 1;
@@ -133,7 +131,6 @@ function go(id){
         //   str = '&pageNumber='
         // }
         // var url = lastUrl + str + (currPage + 1);
-        // console.log(url);
         $lists = $('#lists');
         that.$loading.show();
         $.get(domain+'/api/sh/filter?'+urlEncode(queryObj)+'&pageNumber='+(currPage+1), function(d) {
@@ -189,7 +186,6 @@ function go(id){
             }else{
               var $parent = $(".drop-ul[data-filter="+key+"]");
             }
-            console.log($parent);
             if($parent.length>0){
               var $menu = $(".menu[data-type="+$parent.attr('id').split('-')[1]+"]");
               $parent.find('li').each(function(i, item) {
@@ -209,14 +205,12 @@ function go(id){
         var query  = window.location.search;
         if(query){
           var filterName = query.split('=')[0].substr(1);
-          console.log(filterName);
           var value = query.split('=')[1];
           var $currMenu = $('.drop-ul[data-filter='+filterName+']');
           $currMenu.find('li').each(function(i, item) {
             if($(item).data('id') == value || $(item).data('title') == value){
               var type = $currMenu.attr('id').split('-')[1];
               var $menu = $('.menu[data-type='+type+']');
-              console.log($menu );
               $menu.html($(item).html()+' <i class="iconfont">&#xe606;</i>');
               $menu.css('color','#f96a39');
               $(item).addClass('active');
@@ -234,7 +228,6 @@ function go(id){
     util.getCate();
     util.bind();
     var state = History.getState();
-    console.log(state);
     if(state.data.currId){
       var render = template.compile(source);
       var html = render({
@@ -265,7 +258,9 @@ function go(id){
           shs: d.data.list
         });
         $('#lists').html(html);
+        list = d.data.list;
         resultCount = d.data.resultCount;
+        currPage = 0;
       }
       $loading.hide();
       if (util.hasMore()) {
