@@ -66,6 +66,7 @@ $(function() {
       var queryStr = window.location.search;
       that.lastUrl = this.domain + '/api/job/filter';
       if(queryStr){
+        urlToObj(queryStr,queryObj);
         this.lastUrl += queryStr;
       }
       that.$loading.show();
