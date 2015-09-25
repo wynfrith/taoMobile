@@ -1,13 +1,37 @@
+var list = [];
+var count = 0;
+var resultCount = 0;
+var currPage = 0;
+var queryObj = {};
+
+function go(id){
+  //记录History
+  var state = History.getState();
+  console.log(queryObj);
+  History.pushState({currId:id, list: list, scroll:document.body.scrollTop, resultCount: resultCount, currPage: currPage, queryObj:queryObj},'state',"?state="+id);
+};
+
+var getState= function(state){
+  list = state.data.list || [];
+  resultCount = state.data.resultCount || 0;
+  currPage = state.data.currPage || 0;
+  queryObj = state.data.queryObj || {};
+  console.log("当前页 "+currPage);
+  console.log("滚动条高度: "+state.data.scroll);
+  document.body.scrollTop = state.data.scroll || 0;
+
+}
+
 $(function() {
+
+
   var ua = navigator.userAgent;
   var event = (ua.match(/iphone/i)) || (ua.match(/iPad/i)) ? 'click' : 'click';
   FastClick.attach(document.body);
   var jobs = {
     domain: 'http://120.24.218.56',
     errMsg: '网络错误',
-    resultCount: 0,
     pageSize:8,
-    currPage:0,
     lastUrl:'',
     init: function() {
       //请求兼职列表并渲染dom, 然后绑定事件
@@ -24,8 +48,21 @@ $(function() {
       this.$loading = $('.loading');
     },
     initData: function() {
-      var that = this;
-      $lists = $('#lists');
+      var $lists = $('#lists');
+        var that = this;
+      var state = History.getState();
+      if(state.data.currId){
+        var html = that.getHtml(state.data.list);
+        $lists.append(html);
+        getState(state);
+        if(that.hasMore()){
+          that.$moreBtn.addClass('active');
+        }else{
+          that.$moreBtn.removeClass('active');
+        }
+        return;
+      }
+
       var queryStr = window.location.search;
       that.lastUrl = this.domain + '/api/job/filter';
       if(queryStr){
@@ -34,8 +71,9 @@ $(function() {
       that.$loading.show();
       $.get(that.lastUrl,  function(data) {
         if (data.code == 0) {
+          list = data.data.list; //存储到外部list中
+          resultCount = data.data.resultCount;
           var html = that.getHtml(data.data.list);
-          that.resultCount = data.data.resultCount;
           $lists.append(html);
           that.$loading.hide();
           if(that.hasMore()){
@@ -57,7 +95,6 @@ $(function() {
       var e = event || window.event;
       var elem = e.target || e.srcElement;
       if ($('.nav-bar').find(elem).length > 0) {
-        console.log($(elem) .data('type'));
         var $toggleEle = $('#drop-' + ($(elem).data('type')||$(elem).parent().data('type')));
         if ($toggleEle.hasClass('active')) {
           $(".drop-ul").removeClass('active');
@@ -85,18 +122,25 @@ $(function() {
       $allMenu.each(function(i, currMenu) {
         if ($(currMenu)[0] != $menu[0]) {
           console.log('ok');
-          $(currMenu).html($(currMenu).data('default')+' <i class="iconfont">&#xe606;</i>');
-          $(currMenu).css('color', '#898989');
+          // $(currMenu).html($(currMenu).data('default')+' <i class="iconfont">&#xe606;</i>');
+          // $(currMenu).css('color', '#898989');
         } else {
+          var currDropDown = $('#drop-'+$(currMenu).data('type'));
+          currDropDown.find('li').removeClass('active');
+          $elem.addClass('active');
+
           if ($elem.data('title') == '全部') {
             $(currMenu).html($(currMenu).data('default')+' <i class="iconfont">&#xe606;</i>');
             $(currMenu).css('color', '#898989');
-            that.lastUrl = that.domain+'/api/job/filter';
+            delete queryObj[$elem.parent().data('filter')];
+
+            that.lastUrl = that.domain+'/api/job/filter?' + urlEncode(queryObj);
             that.$loading.show();
             $.get(that.lastUrl , function(data){
               if(data.code == 0){
-                that.resultCount = data.data.resultCount;
-                that.currPage = 0;
+                currPage = 0;
+                list = data.data.list; //存储到外部list中
+                resultCount = data.data.resultCount;
                 var html = that.getHtml(data.data.list);
                 $lists.html(html);
                 if(that.hasMore()){
@@ -113,12 +157,15 @@ $(function() {
             $(currMenu).html($elem.text()+' <i class="iconfont">&#xe606;</i>');
             $(currMenu).css('color', '#f96a39');
             var value = $(elem).data('title') || $(elem).text();
-            that.lastUrl = that.domain + "/api/job/filter?" + $elem.parent().data('filter') + "=" + value;
+            queryObj[$elem.parent().data('filter')] = value;
+            console.log(urlEncode(queryObj));
+            that.lastUrl = that.domain + "/api/job/filter?" + urlEncode(queryObj);
               that.$loading.show();
             $.get(that.lastUrl , function(data) {
                 if (data.code == 0) {
-                  that.resultCount = data.data.resultCount;
-                  that.currPage = 0;
+                  list = data.data.list; //存储到外部list中
+                  resultCount = data.data.resultCount;
+                  currPage = 0;
                   var html = that.getHtml(data.data.list);
                   $lists.html(html);
                   if(that.hasMore()){
@@ -133,36 +180,31 @@ $(function() {
             });
           }
         }
+
       });
 
-      //操作元素
-      $lis.removeClass('active');
-      $defaultLi.each(function(i, currLi) {
-        if ($(currLi).parent()[0] != $('#drop-' + dataType)[0]) {
-          $(currLi).addClass('active');
-        }
-      });
 
-      $elem.addClass('active');
     },
     loadMore: function(){
       //如果总长 > 当前的长度 才会加载
       var that = this;
       if(that.hasMore()){
-        //执行玩 that.currPage += 1;
-        var str ='?pageNumber=';
-        if(that.lastUrl.indexOf('?') > 0){
-          str = '&pageNumber='
-        }
-        var url = that.lastUrl+str+(that.currPage+1);
-        console.log(url);
+        //执行玩 currPage += 1;
+        // var str ='?pageNumber=';
+        // if(that.lastUrl.indexOf('?') > 0){
+        //   str = '&pageNumber='
+        // }
+        // var url = that.lastUrl+str+(currPage+1);
+        // console.log(url);
         $lists = $('#lists');
         that.$loading.show();
-        $.get(url, function(data){
+        $.get(that.domain+"/api/job/filter/?pageNumber="+(currPage+1), function(data){
           if(data.code == 0){
             var html = that.getHtml(data.data.list);
             $lists.append(html);
-            that.currPage +=1;
+            list= list.concat(data.data.list);
+            console.log(list);
+            currPage +=1;
             if(!that.hasMore()){
               that.$moreBtn.removeClass('active');
             }
@@ -176,9 +218,9 @@ $(function() {
     hasMore: function(){
       var that = this;
       var currCount = $('#lists dl').length;
-      console.log(that.resultCount);
+      console.log(resultCount);
       console.log(currCount);
-      return that.resultCount > currCount;
+      return resultCount > currCount;
     },
     getCate: function() {
       // 获取目录
@@ -188,6 +230,27 @@ $(function() {
           var $li = $('<li data-title="' + item.id + '">' + item.name + '</li>');
           $cate.append($li);
         });
+        var state = History.getState();
+        if(state.data.currId){
+          //设置筛选状态
+          for(var key in queryObj){
+            var value = queryObj[key];
+            var $parent = $(".drop-ul[data-filter="+key+"]");
+            var $menu = $(".menu[data-type="+$parent.attr('id').split('-')[1]+"]");
+            console.log($parent);
+            $parent.find('li').each(function(i, item) {
+            if($(item).data('title')== value || $(item).text() == value){
+                $(item).addClass('active');//变色
+                $menu.html($(item).text()+' <i class="iconfont">&#xe606;</i>');
+                $menu.css('color', '#f96a39');
+              }else{
+                $(item).removeClass('active');
+              }
+            });
+          }
+          return;
+        }
+
         var query  = window.location.search;
         if(query){
           var filterName = query.split('=')[0].substr(1);
@@ -211,7 +274,7 @@ $(function() {
       var source = '{{each list as job i}}' + '  <dl>' +
         '    <dt style="color:{{job.category.themeColor}}; border-color:{{job.category.themeColor}}">{{job.category.name | omit:3}}</dt>' +
         '    <dd class="content">' +
-        '      <a href="/m/jobs/detail.html?id={{job.id}}">' +
+        '      <a href="/m/jobs/detail.html?id={{job.id}}" onclick="go({{job.id}})">' +
         '        <h2>{{job.title | omit:11}}</h2>' +
         '        <p class="des">' +
         '          <span><i title="坐标" class="iconfont">&#xe600;</i> {{job.region}}</span>' +
