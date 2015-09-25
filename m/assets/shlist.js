@@ -1,15 +1,33 @@
-$(function() {
+var queryObj = {};
+  var currPage = 0;
+  var list = [];
+  var resultCount = 0; //总数
+function go(id){
+  //记录History
+  console.log("ok");
+  var state = History.getState();
+  console.log(queryObj);
+  History.pushState({currId:id, list: list, scroll:document.body.scrollTop, resultCount: resultCount, currPage: currPage, queryObj:queryObj},'state',"?state="+id);
+}
+  $(function() {
   var ua = navigator.userAgent;
   var event = (ua.match(/iphone/i)) || (ua.match(/iPad/i)) ? 'click' : 'click';
   FastClick.attach(document.body);
   var domain = "http://120.24.218.56";
   var errMsg = "网络错误";
   var $loading = $('.loading');
-  var resultCount = 0; //总数
-  var lastUrl = '';
-  var currPage = 0;
-  $loading.show();
 
+  var lastUrl = '';
+
+
+
+  var getState= function(state){
+    list = state.data.list || [];
+    resultCount = state.data.resultCount || 0;
+    currPage = state.data.currPage || 0;
+    queryObj = state.data.queryObj || {};
+    document.body.scrollTop = state.data.scroll || 0;
+  }
 
   //筛选, more
   var util = {
@@ -32,28 +50,44 @@ $(function() {
           var $defaultLi = $('#drops li[data-all=true]');
         $allMenu.each(function(i, currMenu) {
           if($(currMenu)[0] == $menu[0]){
+            var currDropDown = $('#drop-'+$(currMenu).data('type'));
+            currDropDown.find('li').removeClass('active');
+            $elem.addClass('active');
             var title = $(elem).data('title') || $(elem).text();
             $(currMenu).html(title + ' <i class="iconfont">&#xe606;</i>');
-            var value = $(elem).data('id') || title;
-            console.log(currMenu);
-            if($elem.text() == '全部') {
-              lastUrl = domain + '/api/sh/filter';
+
+            if($(currMenu).data('type') == 'price'){
+              if($elem.text() == '全部') {
+                delete queryObj['rangeQuery'];
+                delete queryObj['minPrice'];
+                delete queryObj['maxPrice'];
                 $(currMenu).css('color', '#898989');
-            }else if($(currMenu).data('type') == 'price'){
-              $(currMenu).css('color', '#f96a39');
-              var min = '&minPrice='+$(elem).data('min');
-              var max= $(elem).data('max')? '&maxPrice='+$(elem).data('max'): '';
-              lastUrl = domain + '/api/sh/filter?rangeQuery=1'+min+max;
+              }else{
+                 $(currMenu).css('color', '#f96a39');
+                var min = '&minPrice='+$(elem).data('min');
+                var max= $(elem).data('max')? '&maxPrice='+$(elem).data('max'): '';
+                queryObj['rangeQuery'] = 1;
+                queryObj['minPrice'] = $(elem).data('min');
+                if($(elem).data('max'))
+                  queryObj['maxPrice'] = $(elem).data('max')
+              }
             }
             else{
+              if($elem.text() == '全部') {
+                $(currMenu).css('color', '#898989');
+                delete queryObj[$elem.parent().data('filter')];
+              }else{
                 $(currMenu).css('color', '#f96a39');
-              lastUrl = domain + '/api/sh/filter?'+ $elem.parent().data('filter') + "=" + value;
+                var value = $(elem).data('id') || title;
+                queryObj[$elem.parent().data('filter')] = value;
+              }
             }
-
+            lastUrl = domain +'/api/sh/filter?'+ urlEncode(queryObj);
             that.$loading.show();
             $.get(lastUrl , function(data) {
               if (data.code == 0) {
                 resultCount = data.data.resultCount;
+                list = data.data.list; //存储到外部list中
                 currPage = 0;
                 var render = template.compile(source);
                 var html = render({
@@ -71,17 +105,11 @@ $(function() {
               }
           });
 
-          $lis.removeClass('active');
-          $defaultLi.each(function(i, currLi) {
-            if ($(currLi).parent()[0] != $('#drop-' + dataType)[0]) {
-              $(currLi).addClass('active');
-            }
-          });
-          $elem.addClass('active');
+
 
         }else{
-          $(currMenu).html($(currMenu).data('default')+' <i class="iconfont">&#xe606;</i>');
-          $(currMenu).css('color', '#898989');
+          // $(currMenu).html($(currMenu).data('default')+' <i class="iconfont">&#xe606;</i>');
+          // $(currMenu).css('color', '#898989');
         }
 
           // that.$loading.show();
@@ -97,21 +125,22 @@ $(function() {
       console.log(that);
       that.$moreBtn = $('.load-more');
       if (that.hasMore()) {
-        //执行玩 that.currPage += 1;
-        var str = '?pageNumber=';
-        if (lastUrl.indexOf('?') > 0) {
-          str = '&pageNumber='
-        }
-        var url = lastUrl + str + (currPage + 1);
-        console.log(url);
+        // //执行玩 that.currPage += 1;
+        // var str = '?pageNumber=';
+        // if (lastUrl.indexOf('?') > 0) {
+        //   str = '&pageNumber='
+        // }
+        // var url = lastUrl + str + (currPage + 1);
+        // console.log(url);
         $lists = $('#lists');
         that.$loading.show();
-        $.get(url, function(d) {
+        $.get(domain+'/api/sh/filter?pageNumber='+(currPage+1), function(d) {
           if (d.code == 0) {
             var render = template.compile(source);
             var html = render({
               shs: d.data.list
             });
+            list= list.concat(d.data.list);
             $lists.append(html);
             currPage += 1;
             if (!that.hasMore()) {
@@ -147,6 +176,34 @@ $(function() {
           var $li = $('<li data-id="' + item.id + '" data-title="' + item.name + '">' + item.name + '</li>');
           $cate.append($li);
         });
+
+        var state = History.getState();
+        if(state.data.currId){
+          //设置筛选状态
+          for(var key in queryObj){
+            var value = queryObj[key];
+            if(key == "minPrice"){
+              var $parent = $('.drop-ul[data-filter=price]');
+            }else{
+              var $parent = $(".drop-ul[data-filter="+key+"]");
+            }
+            console.log($parent);
+            if($parent.length>0){
+              var $menu = $(".menu[data-type="+$parent.attr('id').split('-')[1]+"]");
+              $parent.find('li').each(function(i, item) {
+              if($(item).data('id')== value || $(item).text() == value || $(item).data('min') == value){
+                  $(item).addClass('active');//变色
+                  $menu.html($(item).text()+' <i class="iconfont">&#xe606;</i>');
+                  $menu.css('color', '#f96a39');
+                }else{
+                  $(item).removeClass('active');
+                }
+              });
+            }
+
+          }
+          return;
+        }
         var query  = window.location.search;
         if(query){
           var filterName = query.split('=')[0].substr(1);
@@ -172,11 +229,32 @@ $(function() {
 
   //预加载
   (function init() {
+    util.getCate();
+    util.bind();
+    var state = History.getState();
+    console.log(state);
+    if(state.data.currId){
+      var render = template.compile(source);
+      var html = render({
+        shs: state.data.list
+      });
+      $('#lists').html(html);
+      getState(state);
+      if(util.hasMore()){
+        $('.load-more').addClass('active');
+      }else{
+        $('.load-more').removeClass('active');
+      }
+      return;
+    }
+
     var queryStr = window.location.search;
     lastUrl = domain + '/api/sh/filter';
     if(queryStr){
+      urlToObj(queryStr,queryObj);
       lastUrl += queryStr;
     }
+    $loading.show();
     $.get(lastUrl, function(d) {
       if (d.data == null) {
         alert(errMsg);
@@ -196,8 +274,7 @@ $(function() {
       }
     });
 
-    util.getCate();
-    util.bind();
+
   })();
 
 
@@ -206,7 +283,7 @@ $(function() {
 
 
 var source = ['{{each shs as sh}}',
-  '<a class="list" href="/m/shs/detail.html?id={{sh.id}}">',
+  '<a class="list" href="/m/shs/detail.html?id={{sh.id}}" onclick="go({{sh.id}})">',
   '        <img src="http://120.24.218.56/static/images/users/{{sh.picturePath.split(";")[0]}}" alt="{{sh.title}}">',
   '        <div class="content">',
   '          <h2>{{sh.title | omit:"9"}}</h2>',

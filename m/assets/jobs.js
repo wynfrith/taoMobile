@@ -16,10 +16,7 @@ var getState= function(state){
   resultCount = state.data.resultCount || 0;
   currPage = state.data.currPage || 0;
   queryObj = state.data.queryObj || {};
-  console.log("当前页 "+currPage);
-  console.log("滚动条高度: "+state.data.scroll);
   document.body.scrollTop = state.data.scroll || 0;
-
 }
 
 $(function() {
