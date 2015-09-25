@@ -308,6 +308,7 @@ dd.content .price b {
   color: #f96a39;
   font-size:0.23rem;
   padding:.1rem;
+  display: block;
 }
 .detail header i a:active{
   background-color: rgba(200,200,200,0.2);
