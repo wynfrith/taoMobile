@@ -301,12 +301,13 @@ dd.content .price b {
 }
 .detail header i {
   position: absolute;
-  left:.1rem;;
-  top:0.1rem;
+  left:0rem;;
+  top:0rem;
 }
 .detail header i a{
   color: #f96a39;
   font-size:0.23rem;
+  padding:.1rem;
 }
 .detail header i a:active{
   background-color: rgba(200,200,200,0.2);
