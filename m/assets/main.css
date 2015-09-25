@@ -89,17 +89,31 @@ header h1 {
 }
 /*标准分页*/
 .pagination{
-  /*display: none;*/
+  display: none;
   text-align: center;
+  padding:.1rem;
 }
-.prev-page{
-
+.page{
+  border:0.01rem solid #4ccda4;
+  padding:.03rem .06rem;
+  background-color: #fff;
+  color:#4ccda4;
+  border-radius: .03rem;
+  outline: none;
 }
-.next-page{
-
+.page:hover{
+  background-color: rgba(222,222,222,0.2);
+}
+.page[disabled="disabled"]{
+  color: #ddd;
+  border-color: #ddd;
+}
+.page[disabled="disabled"]:hover{
+  background-color: #fff;
 }
 .page-number{
-
+  color: #898989;
+  padding:.06rem;
 }
 
 nav {

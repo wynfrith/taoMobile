@@ -26,19 +26,10 @@ function urlEncode(obj, key, encode) {
  * @param obj [可选] 要保存的对象容器
  * @returns {{该对象}}
  */
-function urlToObj(search, obj){
-  if(!obj){
-    obj = {};
-  }
-    var key,value,a;
-    if(search == null) return obj;
-    search = search.split('?').slice(-1)[0];//去掉问号
-    console.log(search);
-    var arrays = search.split("&");
-    arrays.forEach(function(str){
-        a =str.split("=");
-        key = a[0], value = a[1];
-        obj[key] = value;
-    });
-    return obj;
+function urlToObj(search,obj){
+  reg = new RegExp( "([^?=&]+)(=([^&]*))?", "g" );
+  search && search.replace(reg,function( $0, $1, $2, $3 ){
+    obj[ $1 ] = decodeURIComponent($3);
+  });
+  return obj;
 }
