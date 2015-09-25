@@ -7,8 +7,6 @@ var list = [];
 var resultCount = 0; //总数
 function go(id) {
   //记录History
-  var state = History.getState();
-  console.log(list);
   History.pushState({
     currId: id,
     list: list,
@@ -40,7 +38,7 @@ $(function() {
   var util = {
     $loading: $('.loading'),
     bind: function() {
-      $(".load-more").on(event, this.loadMore);
+      // $(".load-more").on(event, this.loadMore);
       $("#drops").on(event, $('.drop-ul li'), this.choose);
       $(document).on(event, this.toggle);
       $('.prev-page').on(event, this.prevPage.bind(this));
@@ -48,7 +46,6 @@ $(function() {
     },
     choose: function(e) {
       var $lists = $('#lists');
-      var $lis = $('#drops li');
       var e = e || event || window.event;
       var elem = e.target || e.srcElement;
       var $elem = $(elem);
@@ -56,7 +53,6 @@ $(function() {
       var $allMenu = $('.nav-bar a');
       var dataType = $(elem).parent().attr('id').split('-')[1];
       var $menu = $($('.nav-bar a[data-type=' + dataType + ']')[0]);
-      var $defaultLi = $('#drops li[data-all=true]');
       $allMenu.each(function(i, currMenu) {
         if ($(currMenu)[0] == $menu[0]) {
           var currDropDown = $('#drop-' + $(currMenu).data('type'));
@@ -73,8 +69,6 @@ $(function() {
               $(currMenu).css('color', '#898989');
             } else {
               $(currMenu).css('color', '#f96a39');
-              var min = '&minPrice=' + $(elem).data('min');
-              var max = $(elem).data('max') ? '&maxPrice=' + $(elem).data('max') : '';
               queryObj['rangeQuery'] = 1;
               queryObj['minPrice'] = $(elem).data('min');
               if ($(elem).data('max'))
@@ -112,12 +106,8 @@ $(function() {
 
 
 
-        } else {
-          // $(currMenu).html($(currMenu).data('default')+' <i class="iconfont">&#xe606;</i>');
-          // $(currMenu).css('color', '#898989');
         }
 
-        // that.$loading.show();
       });
     },
     hasMore: function() {
@@ -125,7 +115,6 @@ $(function() {
       return resultCount > (queryObj.pageNumber || 0) * queryObj.pageSize + currCount;
     },
     prevPage: function() {
-      var that = this;
       queryObj['pageNumber'] = (queryObj['pageNumber'] ? parseInt(queryObj['pageNumber']) : 0) - 1;
       var url = "/m/shs/list.html?" + urlEncode(queryObj);
       window.location.href = url;
@@ -159,38 +148,6 @@ $(function() {
         $('.pagination').show();
       } else {
         $('.pagination').hide();
-      }
-    },
-    loadMore: function() {
-      //如果总长 > 当前的长度 才会加载
-      var that = util;
-      that.$moreBtn = $('.load-more');
-      if (that.hasMore()) {
-        // //执行玩 that.currPage += 1;
-        // var str = '?pageNumber=';
-        // if (lastUrl.indexOf('?') > 0) {
-        //   str = '&pageNumber='
-        // }
-        // var url = lastUrl + str + (currPage + 1);
-        $lists = $('#lists');
-        that.$loading.show();
-        $.get(domain + '/api/sh/filter?' + urlEncode(queryObj) + '&pageNumber=' + (currPage + 1), function(d) {
-          if (d.code == 0) {
-            var render = template.compile(source);
-            var html = render({
-              shs: d.data.list
-            });
-            list = list.concat(d.data.list);
-            $lists.append(html);
-            currPage += 1;
-            if (!that.hasMore()) {
-              that.$moreBtn.removeClass('active');
-            }
-          } else {
-            alert(errMsg);
-          }
-          that.$loading.hide();
-        });
       }
     },
     toggle: function(event) {

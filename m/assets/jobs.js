@@ -9,7 +9,6 @@ var queryObj = {
 
 function go(id){
   //记录History
-  var state = History.getState();
   History.pushState({currId:id, list: list, scroll:document.body.scrollTop, resultCount: resultCount, currPage: currPage, queryObj:queryObj},'state',"?state="+id);
 };
 
@@ -18,13 +17,10 @@ var getState= function(state){
   resultCount = state.data.resultCount || 0;
   currPage = state.data.currPage || 0;
   queryObj = state.data.queryObj || {pageSize:16};
-  console.log(queryObj);
   document.body.scrollTop = state.data.scroll || 0;
 }
 
 $(function() {
-
-
   var ua = navigator.userAgent;
   var event = (ua.match(/iphone/i)) || (ua.match(/iPad/i)) ? 'click' : 'click';
   FastClick.attach(document.body);
@@ -83,7 +79,7 @@ $(function() {
     bind: function() {
       $(document).on(event, this.toggle);
       $("#drops").on(event, $('.drop-ul li'), this.choose.bind(this));
-      $(".load-more").on(event, this.loadMore.bind(this));
+      // $(".load-more").on(event, this.loadMore.bind(this));
       $('.prev-page').on(event, this.prevPage.bind(this));
       $('.next-page').on(event, this.nextPage.bind(this));
     },
@@ -111,15 +107,10 @@ $(function() {
       var dataType = $(elem).parent().attr('id').split('-')[1];
       var $menu = $($('.nav-bar a[data-type=' + dataType + ']')[0]);
       var $allMenu = $('.nav-bar a');
-      var $lis = $('#drops li');
-      var $defaultLi = $('#drops li[data-title=全部]');
 
       //操作菜单
       $allMenu.each(function(i, currMenu) {
-        if ($(currMenu)[0] != $menu[0]) {
-          // $(currMenu).html($(currMenu).data('default')+' <i class="iconfont">&#xe606;</i>');
-          // $(currMenu).css('color', '#898989');
-        } else {
+        if($(currMenu)[0] == $menu[0]) {
           var currDropDown = $('#drop-'+$(currMenu).data('type'));
           currDropDown.find('li').removeClass('active');
           $elem.addClass('active');
@@ -154,7 +145,6 @@ $(function() {
             $(currMenu).css('color', '#f96a39');
             var value = $(elem).data('title') || $(elem).text();
             queryObj[$elem.parent().data('filter')] = value;
-            console.log(urlEncode(queryObj));
             // var url ="/m/jobs/list.html?"+urlEncode(queryObj);
             // window.location.href=url;
             that.lastUrl = that.domain + "/api/job/filter?" + urlEncode(queryObj);
@@ -186,49 +176,17 @@ $(function() {
 
     },
     prevPage: function(){
-      var that = this;
       $list = $('#lists');;
       queryObj['pageNumber'] = (queryObj['pageNumber'] ? parseInt(queryObj['pageNumber']):0) -1;
       var url ="/m/jobs/list.html?"+urlEncode(queryObj);
       window.location.href=url;
     },
     nextPage: function(){
-      var that = this;
       $list = $('#lists');
       // that.$loading.show();
       queryObj['pageNumber'] = (queryObj['pageNumber'] ? parseInt(queryObj['pageNumber']):0)+1;
       var url ="/m/jobs/list.html?"+urlEncode(queryObj);
       window.location.href= url;
-    },
-    loadMore: function(){
-      //如果总长 > 当前的长度 才会加载
-      var that = this;
-      if(that.hasMore()){
-        //执行玩 currPage += 1;
-        // var str ='?pageNumber=';
-        // if(that.lastUrl.indexOf('?') > 0){
-        //   str = '&pageNumber='
-        // }
-        // var url = that.lastUrl+str+(currPage+1);
-        // console.log(url);
-        $lists = $('#lists');
-        that.$loading.show();
-        $.get(that.domain+"/api/job/filter/?"+urlEncode(queryObj)+"&pageNumber="+(currPage+1), function(data){
-          if(data.code == 0){
-            var html = that.getHtml(data.data.list);
-            $lists.append(html);
-            list= list.concat(data.data.list);
-            console.log(list);
-            currPage +=1;
-            if(!that.hasMore()){
-              that.$moreBtn.removeClass('active');
-            }
-          }else{
-            alert(that.errMsg);
-          }
-          that.$loading.hide();
-        });
-      }
     },
     checkPage: function(){
 
@@ -255,9 +213,7 @@ $(function() {
       }
     },
     hasMore: function(){
-      var that = this;
      var currCount = $('#lists dl').length;
-     console.log(resultCount);
      return resultCount > (queryObj.pageNumber ||0)* queryObj.pageSize + currCount;
     },
     getCate: function() {
@@ -268,8 +224,6 @@ $(function() {
           var $li = $('<li data-title="' + item.id + '">' + item.name + '</li>');
           $cate.append($li);
         });
-        var state = History.getState();
-        if(true){
           // alert(state.data.currId);
           //设置筛选状态
           for(var key in queryObj){
@@ -289,26 +243,6 @@ $(function() {
             }
 
           }
-          return;
-        }
-
-        var query  = window.location.search;
-        if(query){
-          var filterName = query.split('=')[0].substr(1);
-          var value = query.split('=')[1];
-          var $currMenu = $('.drop-ul[data-filter='+filterName+']');
-          $currMenu.find('li').each(function(i, item) {
-            if($(item).data('title') == value){
-              var type = $currMenu.attr('id').split('-')[1];
-              var $menu = $('.menu[data-type='+type+']');
-              $menu.html($(item).html()+' <i class="iconfont">&#xe606;</i>');
-              $menu.css('color','#f96a39');
-              $(item).addClass('active');
-            }else{
-              $(item).removeClass('active');
-            }
-          });
-        }
       });
     },
     getHtml: function(list) {

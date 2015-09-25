@@ -3,7 +3,6 @@ $(function() {
   var $wrapper = $('#wrapper');
   var $loading = $('.loading');
   var id = window.location.search.split('=')[1];
-  console.log($loading);
   $loading.show();
   $.get(domain + '/api/job/' + id, function(d) {
     if (d.data == null) {

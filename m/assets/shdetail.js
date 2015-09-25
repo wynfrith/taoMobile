@@ -5,7 +5,6 @@ $(function(){
     var $wrapper = $('#wrapper');
     var $loading = $('.loading');
     var id = window.location.search.split('=')[1];
-    console.log($loading);
     $loading.show();
     $.get(domain + '/api/sh/' + id, function(d) {
       if (d.data == null) {
@@ -33,7 +32,7 @@ var source = ['<div class="sh-first">',
 '        <div class="swiper-wrapper">',
 '           {{each pics as pic i}}',
 '            <div class="swiper-slide">',
-'              <img src="http://120.24.218.56/static/images/users/{{pic}}" alt="图片1">',
+'              <img src="http://120.24.218.56/static/images/users/{{pic}}" alt="{{sh.title}}">',
 '            </div>',
 '            {{/each}}',
 '        </div>',
