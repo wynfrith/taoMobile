@@ -2,12 +2,13 @@ var list = [];
 var count = 0;
 var resultCount = 0;
 var currPage = 0;
-var queryObj = {};
+var queryObj = {
+  pageSize: 16
+};
 
 function go(id){
   //记录History
   var state = History.getState();
-  console.log(queryObj);
   History.pushState({currId:id, list: list, scroll:document.body.scrollTop, resultCount: resultCount, currPage: currPage, queryObj:queryObj},'state',"?state="+id);
 };
 
@@ -15,7 +16,7 @@ var getState= function(state){
   list = state.data.list || [];
   resultCount = state.data.resultCount || 0;
   currPage = state.data.currPage || 0;
-  queryObj = state.data.queryObj || {};
+  queryObj = state.data.queryObj || {pageSize:16};
   document.body.scrollTop = state.data.scroll || 0;
 }
 
@@ -60,12 +61,12 @@ $(function() {
         return;
       }
 
-      var queryStr = window.location.search;
-      that.lastUrl = this.domain + '/api/job/filter';
+      that.lastUrl = this.domain + '/api/job/filter?';
       if(queryStr){
+        var queryStr = window.location.search;
         urlToObj(queryStr,queryObj);
-        this.lastUrl += queryStr;
       }
+      this.lastUrl += urlEncode(queryObj);
       that.$loading.show();
       $.get(that.lastUrl,  function(data) {
         if (data.code == 0) {
@@ -196,7 +197,7 @@ $(function() {
         // console.log(url);
         $lists = $('#lists');
         that.$loading.show();
-        $.get(that.domain+"/api/job/filter/?pageNumber="+(currPage+1), function(data){
+        $.get(that.domain+"/api/job/filter/?"+urlEncode(queryObj)+"&pageNumber="+(currPage+1), function(data){
           if(data.code == 0){
             var html = that.getHtml(data.data.list);
             $lists.append(html);

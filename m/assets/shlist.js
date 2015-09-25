@@ -1,4 +1,6 @@
-var queryObj = {};
+var queryObj = {
+  pageSize: 10
+};
   var currPage = 0;
   var list = [];
   var resultCount = 0; //总数
@@ -134,7 +136,7 @@ function go(id){
         // console.log(url);
         $lists = $('#lists');
         that.$loading.show();
-        $.get(domain+'/api/sh/filter?pageNumber='+(currPage+1), function(d) {
+        $.get(domain+'/api/sh/filter?'+urlEncode(queryObj)+'&pageNumber='+(currPage+1), function(d) {
           if (d.code == 0) {
             var render = template.compile(source);
             var html = render({
@@ -249,13 +251,12 @@ function go(id){
     }
 
     var queryStr = window.location.search;
-    lastUrl = domain + '/api/sh/filter';
+    lastUrl = domain + '/api/sh/filter?';
     if(queryStr){
       urlToObj(queryStr,queryObj);
-      lastUrl += queryStr;
     }
     $loading.show();
-    $.get(lastUrl, function(d) {
+    $.get(lastUrl+urlEncode(queryObj), function(d) {
       if (d.data == null) {
         alert(errMsg);
       } else {
