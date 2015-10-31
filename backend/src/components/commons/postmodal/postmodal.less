@@ -1,0 +1,94 @@
+:local(.scoped) {
+  .wrapper {
+    position: fixed;
+    z-index: 9999;
+    background-color: rgba(255,255,255,0.95);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: all .3s ease;
+  }
+
+  .wrapper img {
+    width: 100%;
+    margin-top: .8rem;
+  }
+
+  .footer {
+    position: absolute;
+    width: 100%;
+    bottom: .5rem;
+    text-align: center;
+  }
+  ul {
+    display: block;
+    overflow: auto;
+    margin-bottom: .5rem;
+  }
+  ul li {
+    box-sizing: border-box;
+    width: 50%;
+    display: inline-block;
+    float: left;
+  }
+  ul li p {
+    margin-top: .03rem;
+    color: #444;
+    font-size: .13rem;
+  }
+  .icon {
+    position: relative;
+    display: inline-block;
+    width: .4rem;
+    height: .4rem ;
+    background-color: #84CC5C;
+    padding: .1rem;
+    border-radius: .5rem;
+  }
+  .icon.sh {
+    background-color: #4CCDA4;
+  }
+  .icon.job:hover,.icon.job:active {
+    background-color: #CCBF5C;
+  }
+  .icon.sh:hover,.icon.sh:active {
+    background-color: #4CCD81;
+  }
+  .icon i {
+    color: #fff;
+    font-size: .32rem;
+    position: absolute;
+  }
+  .icon.sh i{
+    top: .12rem;
+    left: .06rem;
+  }
+  .icon.job i {
+    top: .12rem;
+    left: .12rem;
+  }
+
+  a.close {
+    border: none;
+    outline: none;
+    color: #fa6a38;
+    cursor: pointer;
+    display: block;
+  }
+  a.close i {
+    padding:.15rem;
+    font-size: .24rem;
+  }
+
+  .modal-enter, .modal-leave {
+    opacity: 0;
+  }
+
+  .modal-enter,
+  .modal-leave{
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+}

@@ -1,0 +1,128 @@
+:local(.scoped) {
+  height: inherit;
+  background-color: #fff;
+
+  header a{
+    font-size: .3rem;
+    font-weight: 100;
+    color: #000;
+  }
+  header {
+    padding: .07rem .2rem;
+  }
+
+  .logo {
+    text-align: center;
+  }
+  .logo img {
+    width: .8rem;
+    height: .8rem;
+  }
+
+  form {
+    margin:.25rem;
+    text-align: center;
+  }
+  form .group input{
+    font-size: .14rem;
+    box-sizing: border-box;
+    width: 100%;
+    outline: none;
+    border:0;
+    border-bottom: 1px solid #c6c6c6;
+    padding: .13rem 0.3rem .13rem .36rem;
+    margin-bottom: 2px;
+  }
+
+  form .group input:focus{
+      border-bottom: 1px solid #fa6a38;
+  }
+
+  button {
+    outline: none;
+    background-color: #fa6a38;
+    color: #fff;
+    border:none;
+  }
+  form button.group-clear {
+    position: absolute;
+    right:.1rem;
+    top: 0.13rem;
+    background-color: #fff;
+    color: #ddd;
+  }
+  form .login-btn,form .reg-btn {
+    border-radius: .4rem;
+    margin:.3rem 0 .15rem 0;
+    width: 2.72rem;
+    height: 0.45rem;
+    font-size: .16rem;
+  }
+  form .go-login-btn {
+    border-radius: .4rem;
+    margin:0rem 0 .15rem 0;
+    width: 2.72rem;
+    height: 0.45rem;
+    font-size: .16rem;
+    border: 1px solid #fa6a38;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #fa6a38;
+  }
+  form .code-btn[disabled]{
+    background-color: #ccc;
+  }
+
+  form .login-btn[disabled],form .reg-btn[disabled] {
+    color: rgba(255, 255, 255, 0.4);
+  }
+  form .group {
+    position: relative;
+  }
+  form .group .icon-font {
+    position: absolute;
+    left:.1rem; top: .11rem;
+    color: #bbb;
+  }
+  form .code-group input {
+    padding-right: 1.3rem;
+  }
+
+  form .code-btn {
+    position: absolute;
+    padding:0 .1rem;
+    height: .25rem;
+    right:0;
+    top:.08rem;
+    border-radius: .2rem;
+    font-size: 0.12rem;
+  }
+
+
+  .login-links:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  .login-links {
+    padding: 0 .1rem;
+  }
+  .login-links a {
+    color: #fa6a38;
+    font-size: .14rem;
+    text-decoration: underline;
+  }
+  .links-forget {
+    float: left;
+    display: none;
+  }
+  .links-reg {
+    float: right;
+  }
+  form .oauth {
+    display: none;
+  }
+
+
+
+}

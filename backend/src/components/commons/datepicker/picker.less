@@ -1,0 +1,119 @@
+:local(.scoped){
+  .modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    display: table;
+  }
+  .modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .modal-container {
+    position: relative;
+    box-sizing: border-box;
+    width: 80%;
+    margin: 0px auto;
+    padding:.2rem;
+    background-color: #fff;
+    border-radius: .02rem;
+    box-shadow: 0 .02rem .08rem rgba(0, 0, 0, .33);
+  }
+  .modal-header {
+    padding:0 .05rem .1rem;
+    color: #4CAF50;
+    border-bottom: 2px solid #4CAF50;
+    font-size:.16rem;
+  }
+  .modal-body {
+    margin: .1rem 0 .2rem 0;
+  }
+  .modal-body:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0;
+  }
+  .swiper {
+    float: left;
+    width: 33.33%;
+    padding:0 .1rem;
+    height: 1.2rem;
+    box-sizing: border-box;
+    // border:1px solid #000;
+  }
+
+  .swiper-container{
+    position: relative;
+    background-color: #fff;
+    height: 100%;
+    width: 100;
+    text-align: center;
+  }
+  .swiper-slide {
+    // border: 1px solid #000;
+    box-sizing: border-box;
+    line-height: .4rem;
+    // height: .4rem !important;
+    color: #666;
+  }
+
+  .swiper-container button {
+    border: 0;
+    outline: none;
+    background-color: rgba(0,0,0,0);
+  }
+  .swiper-container .prev {
+    z-index: 100;
+    position: absolute;
+    top:0;
+    left:0;
+    border-bottom: 2px solid #4CAF50;
+    width: 100%;
+    height:.4rem;
+  }
+  .swiper-container .next {
+    z-index: 100;
+    position: absolute;
+    bottom: 0;
+    left:0;
+    width: 100%;
+    height: .4rem;
+    border-top: 2px solid #4CAF50;
+  }
+  .modal-footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+  }
+  .modal-footer:after {
+    content: '';
+    height:0;
+    display: block;
+    clear: both;
+  }
+  .modal-footer button {
+    font-size: .12rem;
+    outline: none;
+    border: 0;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+    padding: .1rem;
+    float: left;
+    width: 33.333%;
+    box-sizing: border-box;
+  }
+  .modal-footer button:nth-child(2) {
+    border: 1px solid #ccc;
+    border-bottom: 0;
+  }
+  .modal-footer button:hover, .modal-footer button:active {
+    background-color: #eee;
+  }
+}

@@ -1,0 +1,341 @@
+:local(.scoped).sh {
+  background-color: #f9f9f9;
+}
+:local(.scoped) {
+  height: inherit;
+  background-color: #fff;
+
+  button {
+    outline: none;
+    border:none;
+    background-color: #fff;
+    cursor: pointer;
+  }
+
+
+  header   {
+    text-align: center;
+    position: relative;
+    padding: .1rem .1rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+  }
+  header h1 {
+    font-weight: normal;
+    font-size: .16rem;
+  }
+  header a{
+    display: block;
+    position: absolute;
+    top:0;
+    left:0;
+    min-width: .6rem;
+    color: #43BA94;
+    height: 100%;
+    border-radius: .02rem;
+  }
+  header a span {
+    display: inline-block;
+    font-size: .14rem;
+    margin-top: .1rem;
+  }
+
+  header a:hover {
+    background: rgba(240, 240, 240, 0.7);
+  }
+  .arrow {
+    position: absolute;
+    right:0rem;
+    top:.03rem;
+    line-height: .25rem;
+    color: #a9a9a9;
+  }
+  .blank {
+    width: 100%;
+    background-color: #f9f9f9;
+    height: .15rem;
+  }
+
+  .slide {
+    background-color: #fff;
+  }
+
+  .group {
+    position: relative;
+    border-bottom: 1px solid #ddd;
+    padding: .1rem;
+  }
+  .group-title {
+    position: absolute;
+    padding:.07rem;
+    width: .7rem;
+    text-align: center;
+    display: inline-block;
+    color: #fff;
+    border-radius: .05rem;
+    left:.15rem;
+    font-size: .14rem;
+  }
+
+
+  .group-title.blue{
+    background-color: #65CCED;
+  }
+  .group-title.dark-green{
+    background-color: #84CC5C;
+  }
+  .group-title.light-green {
+    background-color: #4CCDA4;
+  }
+  .group-title.orange {
+    background-color: #FFA200;
+  }
+  .group-toggle {
+    position: absolute;
+    right: .15rem;
+    top: .15rem;
+    transform:rotate(90deg);
+  }
+  .group.disabled .group-description,
+  .group.disabled .group-toggle
+  {
+    color: #ccc;
+
+  }
+  .group.disabled .group-toggle {
+    transform:rotate(0deg);
+  }
+  .group.disabled .group-box {
+    display: none;
+  }
+  .group-description {
+    box-sizing: border-box;
+    padding-top: .07rem;
+    padding-left: .1rem;
+    font-size: .14m;
+  }
+  .group-description.blue,
+  .group-toggle.blue
+  {
+    color: #65CCED;
+  }
+  .group-description.orange,
+  .group-toggle.orange
+  {
+    color: #FFA200;
+  }
+  .group-input, .group-select,.group-description{
+    margin-left: 1rem;
+    height: .29rem;;
+    position: relative;
+  }
+
+  .group-input input,
+  .group-input select,
+  .group-box-input input
+  {
+    outline: none;
+    border: 0;
+    height: inherit;
+    color: #444;
+    width:1.7rem;
+    background-color: #fff;
+    -webkit-appearance: none;
+    appearance:none;
+    -moz-appearance:none;
+    border-radius: 0;
+    font-size: .14rem;
+  }
+  .group-input select.no-selected {
+    color: #a9a9a9;
+  }
+  .group-box-error span{
+    color: #FF5722;
+    font-size:.11rem;
+    padding-left: 1.1rem;
+  }
+  .group-error span {
+    color: #FF5722;
+    font-size: .11rem;
+    padding-left: 1rem;
+  }
+
+  .group-box {
+    margin: .1rem 0 0 0;
+    overflow: hidden;
+  }
+  .group-box-item {
+    position: relative;
+  }
+  .group-box-item label{
+    height: .36rem;
+    line-height: .36rem;
+    font-size: .14rem;
+    position: absolute;
+    left:.1rem;
+    top:0;
+  }
+  .group-box-item label:before {
+    content: '';
+    display: inline-block;
+    width:.05rem;
+    height: .05rem;
+    border-radius: .05rem;
+    background-color: #666;
+    margin-right: .1rem;
+  }
+  .group-box-item label.blue::before {
+    background-color: #65CCED;
+  }
+  .group-box-item label.orange::before {
+    background-color: #FFA200;
+  }
+  .group-box-input {
+    border-top: 1px dashed #c1c1c1;
+    margin-left: 1rem;
+    height: .36rem;
+  }
+  .group-box-input input{
+    font-size :.14m;
+    padding-left: .1rem;
+  }
+
+  .group-clear {
+    padding:.06rem;
+    display: block;
+    position: absolute;
+    right: .14rem;
+  }
+
+  .step {
+    // margin: .2rem 0;
+    text-align: center;
+    padding: .2rem 0;
+  }
+
+  .step button {
+    font-size: .14rem;
+    border-radius: .06rem;
+    background-color: #84CC5C;
+    color: #fff;
+    padding:.1rem .4rem;
+  }
+
+  .step button[disabled], .step button[disabled]:hover{
+    background-color: #ccc;
+  }
+
+  .step button:hover{
+    background-color: #ccb65c;
+  }
+  .step .prev-btn {
+    margin-right: .2rem
+  }
+  .step .post-btn {
+    background-color: #FFA200;
+  }
+
+  .error-all{
+    text-align: center;
+    margin-top: .1rem;
+  }
+  .error-all span {
+    color: #FF5722;
+    font-size: .14rem;
+  }
+  .sh-box .group-title {
+    color: #666;
+  }
+  .sh-box .group-input textarea {
+    resize: none;
+    border: none;
+    font-size: .14rem;
+    width: 1.8rem;
+    height: 100%;
+    outline: none;
+  }
+  .sh-box .group-text{
+    height: .6rem  ;
+  }
+  .sh-box {
+    margin:.1rem 0;
+    background-color: #fff;
+  }
+  .sh-box .group:first-child  {
+    border-top: 1px solid #ddd;
+  }
+  .pic-box {
+    padding: 0 .1rem;
+    padding-top: .1rem;
+  }
+  .pics:after {
+    content: '';
+    display: block;
+    height: 0;
+    clear: both;
+  }
+  .pic {
+    float: left;
+    width: .7rem;
+    height: .7rem;
+    background-color: rgb(253, 238, 238);
+    margin:1px;
+    text-align: center;
+    line-height: .7rem;
+    color: #fff;
+    position: relative;
+  }
+  .pic i {
+    font-size: .3rem;
+  }
+  .pic-btn {
+    background-color: #4ccda4;
+    position: relative;
+  }
+  .pic-btn input {
+    display: none;
+  }
+  .pic-btn label{
+    position: absolute;
+    left:0;
+    top:0;
+    width: 100%;
+    height:100%;
+    opacity: 0;
+    z-index: 99;
+  }
+  .pic img {
+    width: 100%;
+    height: 100%;
+  }
+  .pic-box {
+    position: relative;
+  }
+  .pic-box>span{
+    position: absolute;
+    left:1rem;
+    top:.36rem;
+    color: #4ccda4;
+  }
+  .pic .close {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width:.2rem;
+    height:.2rem;
+    box-sizing: border-box;
+    background-color: rgba(0,0,0,.5);
+  }
+  .pic .close i {
+    box-sizing: border-box;
+    vertical-align: top;
+    line-height: .25rem;
+    display: inline-block;
+    margin-top: -0.02rem;
+    font-size: .2rem;
+  }
+
+
+
+}

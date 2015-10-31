@@ -1,0 +1,52 @@
+{
+  "name": "tao-mobile",
+  "version": "2.0.0",
+  "description": "vue重新实现移动端页面",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wynfrith/taoMobile.git"
+  },
+  "dependenices": {
+    "vue": "^0.12.16",
+    "vue-resource": "^0.1.16",
+    "vue-router": "^0.6.2"
+  },
+  "devDependencies": {
+    "autoprefixer-loader": "^3.1.0",
+    "babel-core": "^5.8.25",
+    "babel-loader": "^5.3.2",
+    "coffee-loader": "^0.7.2",
+    "css-loader": "^0.19.0",
+    "file-loader": "^0.8.4",
+    "style-loader": "^0.12.4",
+    "url-loader": "^0.5.6",
+    "vue-html-loader": "^1.0.0",
+    "vue-loader": "^3.0.4",
+    "webpack": "^1.12.2"
+  },
+  "keywords": [
+    "vue"
+  ],
+  "author": "wynfrith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wynfrith/vue-bootstrap/issues"
+  },
+  "homepage": "https://github.com/wynfrith/vue-bootstrap#readme",
+  "dependencies": {
+    "css-loader": "^0.19.0",
+    "html-loader": "^0.3.0",
+    "less": "^2.5.3",
+    "less-loader": "^2.2.1",
+    "style-loader": "^0.12.4",
+    "vue": "^0.12.16",
+    "vue-resource": "^0.1.16",
+    "vue-router": "^0.7.1",
+    "vue-touch": "^0.1.2",
+    "vue-validator": "^1.4.4"
+  }
+}
