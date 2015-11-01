@@ -17,7 +17,7 @@ uglifyjs m/assets/jobdetail.js -o m/dist/jobdetail.js -c -m
 uglifyjs m/assets/shdetail.js -o m/dist/shdetail.js -c -m
 
 echo "压缩css"
-minify --output m/dist/style.css m/assets/main.css
+minify  m/assets/main.css > m/dist/style.css
 
 echo "压缩html"
 html-minifier m/jobs/list.html -o m/dist/jobs/list.html --remove-comments --conservative-collapse --collapse-whitespace
