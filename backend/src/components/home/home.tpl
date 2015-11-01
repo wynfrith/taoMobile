@@ -24,7 +24,7 @@
   <div class="list">
     <ul class="list-segment">
       <li>
-        <a href="http://cdn.taolijie.cn/m/jobs/list.html">
+        <a href="http://taolijie.cn/m/dist/jobs/list.html">
           <span class="home-icon jobs">
             <i class="iconfont">&#xe609;</i>
           </span>
@@ -33,7 +33,7 @@
         </a>
       </li>
       <li>
-        <a href="http://cdn.taolijie.cn/m/shs/list.html">
+        <a href="http://taolijie.cn/m/dist/shs/list.html">
           <span class="home-icon shs">
             <i class="iconfont">&#xe60b;</i>
           </span>
