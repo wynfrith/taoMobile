@@ -1,7 +1,13 @@
 template.helper('dateFormat', function (date, format) {
-
-    date = new Date(date);
-
+    if (!date){return '';}
+    if (!(date instanceof Date)){
+      if (!+date) {
+        date = new Date(date.replace(/-/g,'/'));
+      }
+      else {
+        date = new Date(+date)
+      }
+    }
     var map = {
         "M": date.getMonth() + 1, //月份
         "d": date.getDate(), //日

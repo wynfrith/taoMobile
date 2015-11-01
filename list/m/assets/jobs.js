@@ -44,6 +44,9 @@ $(function() {
       this.$loading = $('.loading');
     },
     initData: function() {
+      if(mobileUtil.getSearch().state){
+        history.go(-1);
+      }
       var $lists = $('#lists');
           var that = this;
         var state = History.getState();
@@ -178,14 +181,14 @@ $(function() {
     prevPage: function(){
       $list = $('#lists');;
       queryObj['pageNumber'] = (queryObj['pageNumber'] ? parseInt(queryObj['pageNumber']):0) -1;
-      var url ="/m/jobs/list.html?"+urlEncode(queryObj);
+      var url ="list.html?"+urlEncode(queryObj);
       window.location.href=url;
     },
     nextPage: function(){
       $list = $('#lists');
       // that.$loading.show();
       queryObj['pageNumber'] = (queryObj['pageNumber'] ? parseInt(queryObj['pageNumber']):0)+1;
-      var url ="/m/jobs/list.html?"+urlEncode(queryObj);
+      var url ="list.html?"+urlEncode(queryObj);
       window.location.href= url;
     },
     checkPage: function(){
@@ -249,7 +252,7 @@ $(function() {
       var source = '{{each list as job i}}' + '  <dl>' +
         '    <dt style="color:{{job.category.themeColor}}; border-color:{{job.category.themeColor}}">{{job.category.name | omit:3}}</dt>' +
         '    <dd class="content">' +
-        '      <a href="/m/jobs/detail.html?id={{job.id}}" onclick="go({{job.id}})">' +
+        '      <a href="detail.html?id={{job.id}}" onclick="go({{job.id}})">' +
         '        <h2>{{job.title | omit:11}}</h2>' +
         '        <p class="des">' +
         '          <span><i title="坐标" class="iconfont">&#xe600;</i> {{job.region}}</span>' +

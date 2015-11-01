@@ -4,7 +4,7 @@ module.exports = tlj  =
     watingPic: 'http://cdn.taolijie.cn/resources/rolling.svg'
     uploadPath: 'http://v0.api.upyun.com/taolijie-pic/'
     srcRoot: 'http://taolijie-pic.b0.upaiyun.com'
-    convertBase64UrlToBlob: (urlData)->
+    convertBase64UrlToBlob: (urlData)-> #deprecated
       bytes = window.atob (urlData.base64.split ',')[1]
       ab = new ArrayBuffer(bytes.length)
       ia = new Uint8Array(ab)
@@ -23,8 +23,7 @@ module.exports = tlj  =
             before(info) ## 在压缩图片之前调用
             lrz(file, options)
               .then (rst) ->
-                blob = tlj.pic.convertBase64UrlToBlob rst
-                tlj.pic._sendRequest blob, info, error, success
+                tlj.pic._sendRequest rst, info, error, success
               .catch (err) ->
                 console.log err
                 throw new Error '图片上传失败'
@@ -32,26 +31,21 @@ module.exports = tlj  =
             console.log e
             throw new Error '图片上传失败!'
       catch e
-        console.log e
         console.log 'upload方法出错'
         error()
 
-    _sendRequest: (blob, info , error, success)->
-      console.log info
-      console.log blob
+    _sendRequest: (rst , info , error, success)->
       try
         xhr = new XMLHttpRequest()
-        formData = new FormData()
-        formData.append 'signature', info.sign
-        formData.append 'policy', info.policy
-        formData.append 'file', blob
+        rst.formData.append 'signature', info.sign
+        rst.formData.append 'policy', info.policy
         xhr.open 'post', tlj.pic.uploadPath
-        xhr.send formData
+        xhr.send rst.formData
 
         xhr.onreadystatechange = ->
           if xhr.readyState == 4
             if xhr.status >= 200 and xhr.status < 300
-              info.file = blob
+              info.file = rst
               success(info)
             else
               throw Error '图片上传失败'

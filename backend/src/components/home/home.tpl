@@ -7,7 +7,7 @@
     </a> -->
   </header>
   <div class="top" v-if="!isLogged()">
-    <a v-link="{name: 'login'}" class="login-btn btn">登陆</a>
+    <a v-link="{name: 'login'}" class="login-btn btn">登录</a>
     <a v-link="{name: 'register'}" class="btn">注册</a>
   </div>
   <div class="top top-2" v-if="isLogged()">

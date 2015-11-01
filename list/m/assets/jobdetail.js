@@ -2,11 +2,12 @@ $(function() {
   var domain = "http://120.24.218.56"
   var $wrapper = $('#wrapper');
   var $loading = $('.loading');
-  var id = window.location.search.split('=')[1];
+  // var id = window.location.search.split('=');
+  var id  = mobileUtil.getSearch().id;
   $loading.show();
   $.get(domain + '/api/job/' + id, function(d) {
     if (d.data == null) {
-      window.location.href = '/jobs/list.html';
+      window.location.href = 'jobs/list.html';
     } else {
       var render = template.compile(source);
       var html = render({

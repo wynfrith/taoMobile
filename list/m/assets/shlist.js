@@ -116,14 +116,14 @@ $(function() {
     },
     prevPage: function() {
       queryObj['pageNumber'] = (queryObj['pageNumber'] ? parseInt(queryObj['pageNumber']) : 0) - 1;
-      var url = "/m/shs/list.html?" + urlEncode(queryObj);
+      var url = "list.html?" + urlEncode(queryObj);
       window.location.href = url;
     },
     nextPage: function() {
       $list = $('#lists');
       // that.$loading.show();
       queryObj['pageNumber'] = (queryObj['pageNumber'] ? parseInt(queryObj['pageNumber']) : 0) + 1;
-      var url = "/m/shs/list.html?" + urlEncode(queryObj);
+      var url = "list.html?" + urlEncode(queryObj);
       window.location.href = url;
     },
     checkPage: function() {
@@ -199,6 +199,9 @@ $(function() {
 
   //预加载
   (function init() {
+    if(mobileUtil.getSearch().state){
+      history.go(-1);
+    }
     util.getCate();
     util.bind();
     var state = History.getState();
@@ -245,8 +248,8 @@ $(function() {
 
 
 var source = ['{{each shs as sh}}',
-  '<a class="list" href="/m/shs/detail.html?id={{sh.id}}" onclick="go({{sh.id}})">',
-  '        <img src="http://120.24.218.56/static/images/users/{{sh.picturePath.split(";")[0]}}" alt="{{sh.title}}">',
+  '<a class="list" href="detail.html?id={{sh.id}}" onclick="go({{sh.id}})">',
+  '        <img src="http://pic.taolijie.cn/{{sh.picturePath.split(";")[0]}}" alt="{{sh.title}}">',
   '        <div class="content">',
   '          <h2>{{sh.title | omit:"9"}}</h2>',
   '          <p class="content-middle">',
