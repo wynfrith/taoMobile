@@ -70,6 +70,10 @@ module.exports =
       if id == this.toggled[key]
         this.toggled[key] = ''
       else this.toggled[key] = id
+    down: (id, isJob) ->
+      type =  if isJob then 'job' else 'sh'
+      this.msg = '下架功能即将上线'
+      #TODO: 商品下架, 变#ccc,二次点击商家
     edit: (id, isJob) ->
       name =  if isJob then 'editJob' else 'editSh'
       router.go { name: name, params:{id: id}}

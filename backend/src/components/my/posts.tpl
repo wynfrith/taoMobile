@@ -25,17 +25,23 @@
             </a>
           </h2>
           <p class="des">
-            <span><i class="iconfont">&#xe616;</i>发布时间: {{job.postTime | dateFormat 'MM月dd日 hh:mm'}}</span>
+            <a><i class="iconfont">&#xe616;</i>发布时间: {{job.postTime | dateFormat 'MM月dd日 hh:mm'}}</a>
+            <a><i class="iconfont">&#xe60a;</i>浏览量: {{job.pv || '0'}}</a>
           </p>
+          <div class="edit" v-on="click: showEdit(job.id, true)">
+            <span>编辑</span>
+          </div>
         </div>
-        <div class="edit" v-on="click: showEdit(job.id, true)">
-          <span>编辑</span>
-        </div>
+
       </span>
       <div class="opreate" v-if="toggled.job == job.id">
         <span v-on="click:edit(job.id, true)">
           <i class="iconfont">&#xe618;</i>
           <p>修改</p>
+        </span>
+        <span v-on="click:down(job.id, true)">
+          <i class="iconfont">&#xe61d;</i>
+          <p>下架</p>
         </span>
         <span v-on="click:del(job.id, true)">
           <i class="iconfont">&#xe619;</i>
@@ -57,20 +63,29 @@
             <a href="http://cdn.taolijie.cn/m/shs/detail.html?id={{sh.id}}">
               {{sh.title | omit 10}}
             </a>
+            <div class="edit edit-abs" v-on="click: showEdit(sh.id, false)" style="float:right">
+              <span>编辑</span>
+            </div>
           </h2>
-
           <p class="des">
-            <span><i class="iconfont">&#xe616;</i>发布时间: {{sh.postTime | dateFormat 'MM月dd日 hh:mm'}}</span>
+            <a><i class="iconfont">&#xe616;</i>发布时间: {{sh.postTime | dateFormat 'MM月dd日'}}</a>
+            <a><i class="iconfont">&#xe616;</i>浏览量: {{sh.pv || '0'}}</a>
+          </p>
+
           </p>
         </div>
-        <div class="edit edit-abs" v-on="click: showEdit(sh.id, false)">
+        <!-- <div class="edit edit-abs" v-on="click: showEdit(sh.id, false)">
           <span>编辑</span>
-        </div>
+        </div> -->
       </span>
       <div class="opreate" v-if="toggled.sh == sh.id">
         <span v-on="click:edit(sh.id, false)">
           <i class="iconfont">&#xe618;</i>
           <p>修改</p>
+        </span>
+        <span v-on="click:down(sh.id, true)">
+          <i class="iconfont">&#xe61d;</i>
+          <p>下架</p>
         </span>
         <span v-on="click:del(sh.id, false)">
           <i class="iconfont">&#xe619;</i>

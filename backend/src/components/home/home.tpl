@@ -11,12 +11,12 @@
     <a v-link="{name: 'register'}" class="btn">注册</a>
   </div>
   <div class="top top-2" v-if="isLogged()">
-    <span class="img-box">
+    <span class="img-box" >
       <!-- <img src="./default.jpg" alt="头像" v-if="!user.photoPath"> -->
-      <img v-attr="src:user.photoPath" alt="" >
+      <img v-attr="src:user.photoPath" alt="" v-on="click:goSetting()" >
     </span>
     <span class="right"><a v-link="{name: 'setting'}"><i class="iconfont">&#xe610;</i></a></span>
-    <span class="content">
+    <span class="content" v-on="click:goSetting()">
       <p class="user-name">{{user.nickname}}</p>
       <p class="user-phone">{{user.username}}</p>
     </span>

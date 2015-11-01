@@ -13,6 +13,8 @@ module.exports =
     title: 'Vue-Bootstrap Demo'
     showModal: false
   methods :
+    goSetting: ()->
+      router.go {name: 'setting'}
     isLogged: () ->
       return tlj.isLogged()
   components:
