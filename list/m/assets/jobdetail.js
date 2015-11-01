@@ -7,7 +7,7 @@ $(function() {
   $loading.show();
   $.get(domain + '/api/job/' + id, function(d) {
     if (d.data == null) {
-      window.location.href = 'jobs/list.html';
+      window.location.href = 'list.html';
     } else {
       var render = template.compile(source);
       var html = render({
@@ -25,6 +25,7 @@ var source = [
   '      <p class="job-type">',
   '        <span>兼职类型: <b>{{job.category.name}}</b></span>',
   '        <span><i class="iconfont">&#xe604;</i> {{job.postTime | dateFormat:"yyyy-MM-dd hh:mm:ss"}}</span>',
+  '        <span><i class="iconfont">&#xe607;</i> {{job.pv || 0}}</span>',
   '      </p>',
   '      <p class="job-money">',
   '        <b>{{job.wage}}元/{{job.salaryUnit}}</b> {{job.timeToPay}}',
