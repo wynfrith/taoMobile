@@ -16,7 +16,7 @@
       <input type="password" placeholder="请输入密码" v-model="form.password" v-validate="required">
       <i class="icon-font iconfont">&#xe600;</i>
     </div>
-    <button type="button" class="login-btn" v-on="click:login()" v-attr="disabled:invalid">登陆</button>
+    <button type="button" class="login-btn" v-on="click:login()" v-attr="disabled:invalid">登录</button>
 
     <div class="login-links">
       <a href class="links-forget">忘记密码?</a>

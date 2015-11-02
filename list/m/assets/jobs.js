@@ -25,7 +25,7 @@ $(function() {
   var event = (ua.match(/iphone/i)) || (ua.match(/iPad/i)) ? 'click' : 'click';
   FastClick.attach(document.body);
   var jobs = {
-    domain: 'http://120.24.218.56',
+    domain: 'http://taolijie.cn',
     errMsg: '网络错误',
     pageSize:8,
     lastUrl:'',

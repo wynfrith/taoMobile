@@ -20,7 +20,7 @@ $(function() {
   var ua = navigator.userAgent;
   var event = (ua.match(/iphone/i)) || (ua.match(/iPad/i)) ? 'click' : 'click';
   FastClick.attach(document.body);
-  var domain = "http://120.24.218.56";
+  var domain = "http://taolijie.cn";
   var errMsg = "网络错误";
   var $loading = $('.loading');
   var lastUrl = '';

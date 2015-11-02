@@ -1,7 +1,7 @@
 $(function(){
 
 
-    var domain = "http://120.24.218.56"
+    var domain = "http://taolijie.cn"
     var $wrapper = $('#wrapper');
     var $loading = $('.loading');
     var id  = mobileUtil.getSearch().id;

@@ -27,5 +27,5 @@ build/Release
 node_modules
 .DS_Store
 
-backend/build/
-list/m/dist/
+backend/build/*
+list/m/dist/*
