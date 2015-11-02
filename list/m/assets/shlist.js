@@ -249,7 +249,7 @@ $(function() {
 
 var source = ['{{each shs as sh}}',
   '<a class="list" href="detail.html?id={{sh.id}}" onclick="go({{sh.id}})">',
-  '        <img src="http://pic.taolijie.cn/{{sh.picturePath.split(";")[0]}}" alt="{{sh.title}}">',
+  '        <img src="http://pic.taolijie.cn/{{sh.picturePath.split(";")[0]}}!266.200" alt="{{sh.title}}">',
   '        <div class="content">',
   '          <h2>{{sh.title | omit:"9"}}</h2>',
   '          <p class="content-middle">',
