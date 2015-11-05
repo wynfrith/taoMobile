@@ -3,7 +3,7 @@ module.exports = tlj  =
   pic:
     watingPic: 'http://cdn.taolijie.cn/resources/rolling.svg'
     uploadPath: 'http://v0.api.upyun.com/taolijie-pic/'
-    srcRoot: 'http://taolijie-pic.b0.upaiyun.com'
+    srcRoot: 'http://pic.taolijie.cn'
     convertBase64UrlToBlob: (urlData)-> #deprecated
       bytes = window.atob (urlData.base64.split ',')[1]
       ab = new ArrayBuffer(bytes.length)
