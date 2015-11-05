@@ -20,7 +20,7 @@
         </div>
         <div class="content">
           <h2>
-            <a href="http://cdn.taolijie.cn/m/jobs/detail.html?id={{job.id}}">
+            <a href="http://taolijie.cn/m/dist/jobs/detail.html?id={{job.id}}">
               {{job.title | omit 10}}
             </a>
           </h2>
@@ -56,11 +56,11 @@
     <li v-repeat="sh in shList" track-by="id">
       <span>
         <div class="cate">
-          <img v-attr="src:srcRoot+sh.picturePath.split(';')[0]+'!m200'" alt="">
+          <img v-attr="src:srcRoot+sh.picturePath.split(';')[0]+'!fix.189.153'" alt="">
         </div>
         <div class="content">
           <h2>
-            <a href="http://cdn.taolijie.cn/m/shs/detail.html?id={{sh.id}}">
+            <a href="http://taolijie.cn/m/dist/shs/detail.html?id={{sh.id}}">
               {{sh.title | omit 10}}
             </a>
             <div class="edit edit-abs" v-on="click: showEdit(sh.id, false)" style="float:right">

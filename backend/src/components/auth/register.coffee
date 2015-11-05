@@ -6,8 +6,8 @@ module.exports =
   template: require './register.tpl'
   data: ->
     isWaiting: false
-    defaultTime: 60
-    waitTime: 60
+    defaultTime: 180
+    waitTime: 180
     scoped: styles.scoped
     msg:''
     form:
