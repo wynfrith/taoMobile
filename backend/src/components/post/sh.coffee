@@ -30,6 +30,7 @@ module.exports =
       contactName: ''
       contactPhone: ''
       contactQq: ''
+      expired: ''
   computed:
     cateList: ->
       arr = []

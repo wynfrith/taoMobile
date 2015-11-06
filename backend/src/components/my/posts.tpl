@@ -13,7 +13,8 @@
 
   <!-- 兼职 -->
   <ul class="lists job" v-if="isJob">
-    <li v-repeat="job in jobList" track-by="id">
+    <li v-repeat="job in jobList" track-by="id" v-class="disabled:job.expired
+    ">
       <span>
         <div class="cate">
           <span v-text="job.category.name" style="color:{{job.category.themeColor}}; border-color:{{job.category.themeColor}}"></span>
@@ -39,9 +40,9 @@
           <i class="iconfont">&#xe618;</i>
           <p>修改</p>
         </span>
-        <span v-on="click:down(job.id, true)">
+        <span v-on="click:down(job.id,job, true)">
           <i class="iconfont">&#xe61d;</i>
-          <p>下架</p>
+          <p>{{job.expired? '上' : '下'}}架</p>
         </span>
         <span v-on="click:del(job.id, true)">
           <i class="iconfont">&#xe619;</i>
@@ -53,7 +54,8 @@
 
   <!-- 二手 -->
   <ul class="lists shs" v-if="!isJob">
-    <li v-repeat="sh in shList" track-by="id">
+    <li v-repeat="sh in shList" track-by="id" v-class="disabled:sh.expired
+    ">
       <span>
         <div class="cate">
           <img v-attr="src:srcRoot+sh.picturePath.split(';')[0]+'!fix.189.153'" alt="">
@@ -83,9 +85,9 @@
           <i class="iconfont">&#xe618;</i>
           <p>修改</p>
         </span>
-        <span v-on="click:down(sh.id, true)">
+        <span v-on="click:down(sh.id,sh, false)">
           <i class="iconfont">&#xe61d;</i>
-          <p>下架</p>
+          <p>{{sh.expired? '上' : '下'}}架</p>
         </span>
         <span v-on="click:del(sh.id, false)">
           <i class="iconfont">&#xe619;</i>

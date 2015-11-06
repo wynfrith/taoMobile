@@ -653,3 +653,12 @@ dd.content .price b {
 .sh-first .back:hover{
   background-color:rgba(220, 222, 222, 1);
 }
+
+.expired-img {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: .5rem !important;
+  height: .6rem !important;
+  z-index: 100;
+}

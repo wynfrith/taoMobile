@@ -250,6 +250,7 @@ $(function() {
     },
     getHtml: function(list) {
       var source = '{{each list as job i}}' + '  <dl>' +
+        '{{if job.expired}}<img class="expired-img" src="../expired.png">{{/if}}'+
         '    <dt style="color:{{job.category.themeColor}}; border-color:{{job.category.themeColor}}">{{job.category.name | omit:3}}</dt>' +
         '    <dd class="content">' +
         '      <a href="detail.html?id={{job.id}}" onclick="go({{job.id}})">' +

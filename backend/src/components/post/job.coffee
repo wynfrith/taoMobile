@@ -60,6 +60,7 @@ module.exports =
       contact: ''
       contactPhone: ''
       contactQq: ''
+      expired:''
   route:
     data: (trans) ->
       if trans.to.name == 'editJob' && params = trans.to.params

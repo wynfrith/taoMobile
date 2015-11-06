@@ -33,6 +33,5 @@ module.exports =
             this.msg = tlj.error[code] || '登陆出错'
         .catch (e) =>
           this.msg= tlj.error[-1]
-
     goRegister: ->
       router.go { name: 'register' }

@@ -70,9 +70,19 @@ module.exports =
       if id == this.toggled[key]
         this.toggled[key] = ''
       else this.toggled[key] = id
-    down: (id, isJob) ->
+    down: (id, item , isJob) ->
+      console.log item.expired
       type =  if isJob then 'job' else 'sh'
-      this.msg = '下架功能即将上线'
+      url = tlj.domain+"/api/u/#{type}/#{id}"
+      this.$http.put url, {expired: !item.expired}
+        .then (res)=>
+          if res.data.code == 0
+            this.msg = if item.expired then '上架成功' else '下架成功'
+            item.expired = !item.expired
+          else
+            this.msg = tlj.error[res.data.code]
+        .catch (e) =>
+          this.msg = tlj.error[-1]
       #TODO: 商品下架, 变#ccc,二次点击商家
     edit: (id, isJob) ->
       name =  if isJob then 'editJob' else 'editSh'
