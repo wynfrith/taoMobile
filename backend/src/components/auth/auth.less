@@ -1,7 +1,6 @@
 :local(.scoped) {
   height: inherit;
   background-color: #fff;
-
   header a{
     font-size: .3rem;
     font-weight: 100;
@@ -10,6 +9,7 @@
   header {
     padding: .07rem .2rem;
   }
+
 
   .logo {
     text-align: center;
@@ -114,7 +114,7 @@
   }
   .links-forget {
     float: left;
-    display: none;
+    // display: none;
   }
   .links-reg {
     float: right;
@@ -124,5 +124,47 @@
   }
 
 
+
+}
+
+:local(.scoped).forget {
+  background-color: #f9f9f9;
+  header{
+    position: relative;
+    text-align: center;
+    padding: .12rem;
+    background-color: #fff;
+    overflow: hidden;
+    border-bottom: 1px solid #c6c6c6;
+  }
+  header h1 {
+    display: inline;
+    color: #111;
+    font-weight: normal;
+    font-size: .18rem;
+  }
+  header a{
+    display: inline-block;
+    height: 100%;
+    line-height: .4rem;
+    top:0;
+    left: 0;
+    position: absolute;
+    color: #fa6a38;
+    padding:0 .2rem;
+  }
+
+  form {
+    margin:.25rem 0;
+    text-align: center;
+    border-top: .01rem solid #c6c6c6;
+    // border-bottom: .02rem solid #e3e3e3;
+  }
+  .code-btn {
+    margin-right: .1rem;
+  }
+  form .group input:focus{
+      border-bottom: 1px solid #c6c6c6;
+  }
 
 }

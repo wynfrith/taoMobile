@@ -19,7 +19,7 @@
     <button type="button" class="login-btn" v-on="click:login()" v-attr="disabled:invalid">登录</button>
 
     <div class="login-links">
-      <a href class="links-forget">忘记密码?</a>
+      <a  v-link="{name: 'forget'}" class="links-forget">忘记密码?</a>
       <a v-link="{name: 'register'}" class="links-reg">还没有账号?</a>
     </div>
 
