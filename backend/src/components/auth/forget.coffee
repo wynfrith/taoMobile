@@ -2,6 +2,9 @@ styles = require './auth.less'
 
 module.exports =
   template: require './forget.tpl'
+  ready: ->
+    if u = this.$route.query.u
+      this.form.$set 'mobile', u
   data: () ->
     scoped: styles.scoped
     msg: ''
