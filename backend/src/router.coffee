@@ -45,6 +45,9 @@ module.exports = ConfigureRouter = (router) ->
       name: 'register'
       component: require './components/auth/register'
 
+    '/forget':
+      name: 'forget'
+      component: require './components/auth/forget'
     '/favs':
       name: 'favs'
       component: require './components/my/favs'
