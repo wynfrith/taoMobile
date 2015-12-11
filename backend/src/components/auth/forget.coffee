@@ -21,7 +21,7 @@ module.exports =
         return '获取验证码'
   methods:
     getCode: (isPhoneValid)->
-      url = tlj.domain + "/register/sms"
+      url = tlj.domain + "/register/sms?reg=1"
       if !isPhoneValid
         return this.msg = '请输入正确的手机号'
       this.isWaiting = true # 等待验证码
